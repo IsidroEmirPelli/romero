@@ -41,7 +41,7 @@
                                         contlista.innerHTML = ''
                                         if (data.length != 0){
                                             for (let i = 0; i < data.length; i++){
-                                                let url = "{% url 'vista' 1234 %}".replace(/1234/, data[i].dni)
+                                                let url = "{% url 'vista' 1234 %}".replace(/1234/, data[i].id)
                                                 contlista.innerHTML += `
                                                 <div class="card-header text-white row">
                                                         <p class="h6 col-md-8 text-center mt-2">

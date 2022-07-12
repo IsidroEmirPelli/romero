@@ -1,0 +1,36 @@
+{% extends 'crudromero/layout.html' %}
+{% block content %}
+    <div class="table-responsive table-sm ">
+        <table class="table table-dark table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Apellido</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>DNI</th>
+                    <th>Sexo</th>
+                    <th>Domicilio</th>
+                    <th>Teléfono</th>
+                    <th>Barrio/Localidad</th>
+                    <th>Región sanitaria</th>
+                    <th>Motivo de consulta</th>
+                    <th>Evaluación</th>
+                    <th>Tratamiento psicofarmacológico</th>
+                    <th>Internación</th>
+                    <th>Derivación</th>
+                    <th>Auxilio a sala</th>
+                    <th>Guardia clínica</th>
+                    <th>Intervención</th>
+                    <th>Profesionales</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% block tbody %}
+                
+                {% endblock %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

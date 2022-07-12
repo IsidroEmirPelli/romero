@@ -6,5 +6,5 @@ urlpatterns = [
     path('', views.inicio, name='inicio'),
     path('getuserdata/', views.get_data, name='api-get'),
     path('ver-todo/<str:text>', views.ver_todo, name='ver_todo'),
-    path('ver/<str:dni>', views.vista, name='vista'),
+    path('ver/<str:id>', views.vista, name='vista'),
 ]

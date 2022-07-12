@@ -22,14 +22,13 @@ def registro(request):
 
     return render(request, 'crudromero/registro.html')
 
-def vista(request):
-    return render(request, 'crudromero/ver.html')
+def vista(request, id):
+    context = {'paciente': Paciente.objects.get(id=id)}
+    return render(request, 'crudromero/ver.html', context)
 
 def get_query_result(text, all=False):
-    if not all:
-        limit = 5
-    else:
-        limit = None
+
+    limit = 5 if not all else None
 
     if text[1] == 'undefined':
         if text[0].isdigit():
