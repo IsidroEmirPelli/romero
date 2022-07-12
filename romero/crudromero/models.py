@@ -17,7 +17,7 @@ class Paciente(models.Model):
     evaluacion = models.CharField(max_length=300, blank=True)
     tratamiento_psicofarm = models.CharField(max_length=300, blank=True)
     internacion = models.CharField(max_length=12, blank=True)
-    derivacion = models.CharField(max_length=2, blank=True)
+    derivacion = models.CharField(max_length=34, blank=True)
     auxilio = models.CharField(max_length=100, blank=True)
     intervencion = models.CharField(max_length=100, blank=True)
     profesionales = models.TextField()

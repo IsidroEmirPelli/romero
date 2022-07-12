@@ -41,20 +41,24 @@
                                         contlista.innerHTML = ''
                                         if (data.length != 0){
                                             for (let i = 0; i < data.length; i++){
-                                                let url = "{% url 'vista' 1234 %}".replace(/1234/, data[i].dni)
+                                                let url_ver = "{% url 'vista' 1234 %}".replace(/1234/, data[i].id)
+                                                let url_mod = "{% url 'modificar' 1234 %}".replace(/1234/, data[i].id)
                                                 contlista.innerHTML += `
-                                                <div class="card-header text-white row">
-                                                        <p class="h6 col-md-8 text-center mt-2">
+                                                <div class="card-header text-white">
+                                                        <p class="h6 col-md-8 text-center mt-2 mb-3 mx-auto">
                                                             ${data[i].nombre} ${data[i].apellido} ${data[i].dni}
                                                         </p>
-                                                        <a href=${url} class="btn btn-primary col-md-4">Ver</a>
+                                                        <div class="row">
+                                                            <a href=${url_ver} class="btn btn-primary col-md-4 ms-auto">Ver</a>
+                                                            <a href=${url_mod} class="btn btn-primary col-md-4 me-auto ms-2">Modificar</a>
+                                                        </div>
                                                 </div>
                                                 `
                                             }
                                             document.getElementById('contlista').classList.remove("d-none")
                                             if (data.length == 5){
                                                 let urlver = "{% url 'ver_todo' 1234 %}".replace(/1234/, lista[0]+'-'+lista[1])
-                                                contlista.innerHTML+= `<a href=${urlver} class="btn btn-info col-md-4">Ver más</a>`
+                                                contlista.innerHTML+= `<a href=${urlver} class="btn btn-info col-md-4 mx-auto">Ver más</a>`
                                             }
                                         }
                                         else{

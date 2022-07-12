@@ -1,4 +1,26 @@
-{% extends 'crudromero/layout.html' %}
-{% block content %}
- <h1>VISTA!</h1>
+{% extends 'crudromero/layout_ver.html' %}
+{% block tbody %}
+    <tr>
+        <td>{{ paciente.fecha }}</td>
+        <td>{{ paciente.hora }}</td>
+        <td>{{ paciente.apellido }}</td>
+        <td>{{ paciente.nombre }}</td>
+        <td>{{ paciente.edad }}</td>
+        <td>{{ paciente.dni }}</td>
+        <td>{{ paciente.sexo }}</td>
+        <td>{{ paciente.domicilio }}</td>
+        <td>{{ paciente.telefono }}</td>
+        <td>{{ paciente.barrio }}</td>
+        <td>{{ paciente.region_sanitaria }}</td>
+        <td>{{ paciente.motivo_consulta }}</td>
+        <td>{{ paciente.evaluacion }}</td>
+        <td>{{ paciente.tratamiento_psicofarm }}</td>
+        <td>{{ paciente.internacion }}</td>
+        <td>{{ paciente.derivacion }}</td>
+        <td>{{ paciente.auxilio }}</td>
+        <td>{{ paciente.guardia_clinica }}</td>
+        <td>{{ paciente.intervencion }}</td>
+        <td>{{ paciente.profesionales }}</td>
+        <td></td>
+    </tr>
 {% endblock %}
