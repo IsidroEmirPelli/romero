@@ -16,8 +16,9 @@
                         class="form-control col-md-3"
                         name="fecha"
                         id="fecha"
+                        value="2013-01-08"
                         required
-                    />
+                    /> <!-- A "value" le asigno un texto placeholder por el momento -->
                 </div>
                 <div class="col-md-3">
                     <label for="apellido">Apellido</label>
@@ -25,6 +26,7 @@
                         type="text"
                         class="form-control col-md-3"
                         name="apellido"
+                        value="{{ paciente.apellido }}"
                         id="apellido"
                     />
                 </div>
@@ -35,6 +37,7 @@
                         class="form-control col-md-3"
                         name="nombre"
                         id="nombre"
+                        value="{{ paciente.nombre }}"
                         required
                     />
                 </div>
@@ -46,6 +49,7 @@
                         class="form-control col-md-1"
                         name="edad"
                         id="edad"
+                        value="{{ paciente.edad }}"
                     />
                     </div>
                     <div class="col-md-6 px-1">
@@ -55,6 +59,7 @@
                             class="form-control col-md-3"
                             name="hora"
                             id="hora"
+                            value="{{ paciente.hora }}"
                             required
                         />
                     </div>
@@ -68,6 +73,7 @@
                         class="form-control col-md-1"
                         name="dni"
                         id="dni"
+                        value="{{ paciente.dni }}"
                         required
                     />
                 </div>
@@ -88,6 +94,7 @@
                         class="form-control col-md-3"
                         name="domicilio"
                         id="domicilio"
+                        value="{{ paciente.domicilio }}"
                     />
                 </div>
                 <div class="col-md-3">
@@ -97,6 +104,7 @@
                         class="form-control col-md-1"
                         name="telefono"
                         id="telefono"
+                        value="{{ paciente.telefono }}"
                     />
                 </div>
             </div>
@@ -108,6 +116,7 @@
                         class="form-control col-md-3"
                         name="barrio"
                         id="barrio"
+                        value="{{ paciente.barrio }}"
                     />
                 </div>
                 <div class="col-md-3">
@@ -117,6 +126,7 @@
                         class="form-control col-md-3"
                         name="region_satinaria"
                         id="region_satinaria"
+                        value="{{ paciente.region_satinaria }}"
                     />
                 </div>
                 <div class="col-md-6">
@@ -126,13 +136,14 @@
                         class="form-control col-md-3"
                         name="motivo_consulta"
                         id="motivo_consulta"
+                        value="{{ paciente.motivo_consulta }}"
                     />
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="form-group">
                     <label for="evaluacion">Evaluacion</label>
-                    <textarea class="form-control" name="evaluacion" id="evaluacion" rows="3"></textarea>
+                    <textarea class="form-control" name="evaluacion" id="evaluacion" rows="3">{{ paciente.id }}</textarea>
                 </div>
             </div>
             <div class="row mb-3">
@@ -143,6 +154,7 @@
                         type="text"
                         class="form-control col-md-3"
                         name="tratamiento_psicofarm"
+                        value="{{ paciente.tratamiento_psicofarm }}"
                     />
                 </div>
                 <div class="col-md-2">
@@ -170,6 +182,7 @@
                         type="text"
                         class="form-control col-md-3"
                         name="auxilio"
+                        value="{{ paciente.auxilio }}"
                     />
                 </div>
             </div>
@@ -181,6 +194,7 @@
                         type="text"
                         class="form-control col-md-3"
                         name="guardia_clinica"
+                        value="{{ paciente.guardia_clinica }}"
                     />
                 </div>
                 <div class="col-md-6">
@@ -190,6 +204,7 @@
                         type="text"
                         class="form-control col-md-3"
                         name="intervencion"
+                        value="{{ paciente.internacion }}"
                     />
                 </div>
                 <div class="col-md-3">
@@ -199,6 +214,7 @@
                         type="text"
                         class="form-control col-md-3"
                         name="profesionales"
+                        value="{{ paciente.profesionales }}"
                         required
                     />
                 </div>

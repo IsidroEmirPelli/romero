@@ -22,6 +22,7 @@
         <td>{{ paciente.guardia_clinica }}</td>
         <td>{{ paciente.intervencion }}</td>
         <td>{{ paciente.profesionales }}</td>
+        <td><a href="{% url 'modificar' paciente.id %}" class="btn btn-info col-md-4 mx-auto">Modificar</a></td>
     </tr>
     {% endfor %}
 {% endblock %}

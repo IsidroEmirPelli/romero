@@ -19,7 +19,6 @@ def registro(request):
         else:
             print(form.errors)
 
-
     return render(request, 'crudromero/registro.html')
 
 def vista(request, id):
@@ -48,6 +47,18 @@ def ver_todo(request, text):
 
     return render(request, 'crudromero/ver_todo.html', context)
 
+def modificar(request, id):
+    paciente = Paciente.objects.get(id=id)
+    if request.method == 'POST':
+        form = PacienteForm(request.POST, instance=paciente)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        else:
+            print(form.errors)
+    
+    context = {'paciente': paciente}
+    return render(request, 'crudromero/registro.html', context)
 
 @api_view(['GET'])
 def get_data(request):
