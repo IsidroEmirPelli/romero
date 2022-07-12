@@ -1,0 +1,76 @@
+{% extends 'crudromero/layout.html' %} {% block content %}
+<div>
+    <div class="col-md-4 offset-md-4 mx-auto">
+        <div class="card">
+            <div class="text-center bg-secondary text-white rounded m-4 mt-2">
+                <h2 class="h4">Sistema de control de pacientes</h2></div>
+            <div class="mx-auto mt-3">
+                {% load static %}
+                <img
+                    src={% static 'media/logo.png' %}
+                    alt="CRUD"
+                    class="img-fluid rounded-circle "
+                />
+            </div>
+            <div class="card-body text-dark mt-2">
+                <input
+                    type="text"
+                    class="form-control text-center"
+                    id="text"
+                    name="text"
+                    placeholder="Nombre DNI"
+                />
+            </div>
+            <div class="m-2 d-none" id="contlista">
+                <div class="card bg-dark" id="lista"></div>
+            </div>
+            <script>
+                    const input = document.getElementById("text")
+                    input.addEventListener("keyup",(event) => {
+                        if (event.key == "Enter")
+                        {
+                            console.log("entre")
+                            const lista = input.value.split(' ')
+                            let contlista = document.getElementById("lista")
+                            if (lista.length > 0 & lista.length <= 2 & lista[0] != '')
+                            {
+                                const url ='http://127.0.0.1:8000/getuserdata/?format=json&text='
+                                fetch(url+lista[0]+'-'+lista[1])
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        contlista.innerHTML = ''
+                                        if (data.length != 0){
+                                            for (let i = 0; i < data.length; i++){
+                                                let url = "{% url 'vista' 1234 %}".replace(/1234/, data[i].dni)
+                                                contlista.innerHTML += `
+                                                <div class="card-header text-white row">
+                                                        <p class="h6 col-md-8 text-center mt-2">
+                                                            ${data[i].nombre} ${data[i].apellido} ${data[i].dni}
+                                                        </p>
+                                                        <a href=${url} class="btn btn-primary col-md-4">Ver</a>
+                                                </div>
+                                                `
+                                            }
+                                            document.getElementById('contlista').classList.remove("d-none")
+                                            if (data.length == 5){
+                                                let urlver = "{% url 'ver_todo' 1234 %}".replace(/1234/, lista[0]+'-'+lista[1])
+                                                contlista.innerHTML+= `<a href=${urlver} class="btn btn-info col-md-4">Ver más</a>`
+                                            }
+                                        }
+                                        else{
+                                            contlista.innerHTML+= `<div class="card-header text-white">
+                                                                <p class="h6 mt-2 text-center">
+                                                                    ¡No hay coincidencias!
+                                                                </p>
+                                                                </div>`
+                                            document.getElementById('contlista').classList.remove("d-none")
+                                        }
+                                    })
+                            }
+                        }
+                    })
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock %}

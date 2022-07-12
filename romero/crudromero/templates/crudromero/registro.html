@@ -1,0 +1,208 @@
+{% extends 'crudromero/layout.html' %}
+{% block content %}
+        <form
+            method="post"
+            class="card card-body p-5 w-75 mx-auto pt-2 mt-4"
+            style="background-color: white"
+        >
+            {% csrf_token %}
+            <div class="text-center bg-secondary text-white rounded m-4 mt-2">
+                <h2 class="h2">Registro de pacientes</h2></div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="fecha">Fecha</label>
+                    <input
+                        type="Date"
+                        class="form-control col-md-3"
+                        name="fecha"
+                        id="fecha"
+                        required
+                    />
+                </div>
+                <div class="col-md-3">
+                    <label for="apellido">Apellido</label>
+                    <input
+                        type="text"
+                        class="form-control col-md-3"
+                        name="apellido"
+                        id="apellido"
+                    />
+                </div>
+                <div class="col-md-3">
+                    <label for="nombre">Nombre</label>
+                    <input
+                        type="text"
+                        class="form-control col-md-3"
+                        name="nombre"
+                        id="nombre"
+                        required
+                    />
+                </div>
+                <div class="row col-md-3 m-0 ps-0 pl-2">
+                    <div class="col-md-6">
+                    <label for="edad">Edad</label>
+                    <input
+                        type="number"
+                        class="form-control col-md-1"
+                        name="edad"
+                        id="edad"
+                    />
+                    </div>
+                    <div class="col-md-6 px-1">
+                        <label for="hora">Hora</label>
+                        <input
+                            type="text"
+                            class="form-control col-md-3"
+                            name="hora"
+                            id="hora"
+                            required
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="dni">DNI</label>
+                    <input
+                        type="number"
+                        class="form-control col-md-1"
+                        name="dni"
+                        id="dni"
+                        required
+                    />
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="sexo">Sexo</label>
+                        <select class="form-control" name="sexo" id="sexo">
+                            <option>Hombre</option>
+                            <option>Mujer</option>
+                            <option>Otro</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="domicilio">Domicilio</label>
+                    <input
+                        type="text"
+                        class="form-control col-md-3"
+                        name="domicilio"
+                        id="domicilio"
+                    />
+                </div>
+                <div class="col-md-3">
+                    <label for="telefono">Telefono</label>
+                    <input
+                        type="number"
+                        class="form-control col-md-1"
+                        name="telefono"
+                        id="telefono"
+                    />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="barrio">Barrio</label>
+                    <input
+                        type="text"
+                        class="form-control col-md-3"
+                        name="barrio"
+                        id="barrio"
+                    />
+                </div>
+                <div class="col-md-3">
+                    <label for="region_satinaria">Region sanitaria</label>
+                    <input
+                        type="text"
+                        class="form-control col-md-3"
+                        name="region_satinaria"
+                        id="region_satinaria"
+                    />
+                </div>
+                <div class="col-md-6">
+                    <label for="motivo_consulta">Motivo de consulta</label>
+                    <input
+                        type="text"
+                        class="form-control col-md-3"
+                        name="motivo_consulta"
+                        id="motivo_consulta"
+                    />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="form-group">
+                    <label for="evaluacion">Evaluacion</label>
+                    <textarea class="form-control" name="evaluacion" id="evaluacion" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="tratamiento_psicofarm">Tratamiento psicofarmacologico</label>
+                    <input
+                        id="tratamiento_psicofarm"
+                        type="text"
+                        class="form-control col-md-3"
+                        name="tratamiento_psicofarm"
+                    />
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="internacion">Internacion</label>
+                        <select class="form-control" name="internacion" id="internacion">
+                            <option>Voluntaria</option>
+                            <option>Involuntaria</option>
+                        </select>
+                    </div>
+                </div>
+                 <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="derivacion">Derivacion</label>
+                        <select class="form-control" name="derivacion" id="derivacion">
+                            <option>CR</option>
+                            <option>RS</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="auxilio">Auxilio a sala</label>
+                    <input
+                        id="auxilio"
+                        type="text"
+                        class="form-control col-md-3"
+                        name="auxilio"
+                    />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="guardia_clinica">Guadia clinica</label>
+                    <input
+                        id="guardia_clinica"
+                        type="text"
+                        class="form-control col-md-3"
+                        name="guardia_clinica"
+                    />
+                </div>
+                <div class="col-md-6">
+                    <label for="intervencion">Intervencion</label>
+                    <input
+                        id="intervencion"
+                        type="text"
+                        class="form-control col-md-3"
+                        name="intervencion"
+                    />
+                </div>
+                <div class="col-md-3">
+                    <label for="profesionales">Profesionales</label>
+                    <input
+                        id="profesionales"
+                        type="text"
+                        class="form-control col-md-3"
+                        name="profesionales"
+                        required
+                    />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-25 mx-auto mt-3">Agregar</button>
+        </form>
+{% endblock %}
