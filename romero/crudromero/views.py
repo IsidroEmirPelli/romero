@@ -28,27 +28,31 @@ def vista(request, id):
 
 def get_query_result(text, all=False, fin=0):
 
-    limit = 5 if not all else fin
+    start_value, limit = (0, 5) if not all else (fin, fin+100)
 
     if text[1] == 'undefined':
         if text[0].isdigit():
-            pacientes = Paciente.objects.filter(dni__startswith=text[0])[:limit]
+            pacientes = Paciente.objects.filter(dni__startswith=text[0])[start_value:limit]
         else:
-            pacientes = Paciente.objects.filter(nombre__startswith=text[0])[:limit]
+            pacientes = Paciente.objects.filter(nombre__startswith=text[0])[start_value:limit]
     else:
         if text[0].isdigit():
-            pacientes = Paciente.objects.filter(dni__startswith=text[0], nombre__startswith=text[1])[:limit]
+            pacientes = Paciente.objects.filter(dni__startswith=text[0], nombre__startswith=text[1])[start_value:limit]
         else:
-            pacientes = Paciente.objects.filter(dni__startswith=text[1], nombre__startswith=text[0])[:limit]
+            pacientes = Paciente.objects.filter(dni__startswith=text[1], nombre__startswith=text[0])[start_value:limit]
 
-    return pacientes
+    d_none = True if len(pacientes) == 0 else False
+
+    return pacientes, limit, d_none
 
 def ver_todo(request, text, fin):
 
+    pacientes, fin, d_none = get_query_result(text.split('-'), True, fin)
     context = {
-            'texto': text,
+            'text': text,
             'fin': fin,
-            'pacientes': get_query_result(text.split('-'), True, fin),
+            'pacientes': pacientes,
+            'd_none': ('d-none' if d_none else ''),
     }
 
     return render(request, 'crudromero/ver_todo.html', context)
@@ -70,7 +74,8 @@ def modificar(request, id):
 def get_data(request):
     # Return all data startswith request.GET['text']
     text = request.GET['text'].split('-')
-    pacientes = get_query_result(text, False)
+    pacientes, _, _ = get_query_result(text, False)
     serializer = PacienteSerializer(pacientes, many=True)
     print(serializer.data)
+
     return Response(serializer.data)
