@@ -12,7 +12,7 @@ class Paciente(models.Model):
     domicilio = models.CharField(max_length=150, blank=True)
     telefono = models.IntegerField(null=True, blank=True)
     barrio = models.CharField(max_length=100, blank=True)
-    region_satinaria = models.CharField(max_length=100, blank=True)
+    region_sanitaria = models.CharField(max_length=100, blank=True)
     motivo_consulta = models.CharField(max_length=50, blank=True)
     evaluacion = models.CharField(max_length=300, blank=True)
     tratamiento_psicofarm = models.CharField(max_length=300, blank=True)

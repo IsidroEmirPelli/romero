@@ -57,7 +57,7 @@
                                             }
                                             document.getElementById('contlista').classList.remove("d-none")
                                             if (data.length == 5){
-                                                let urlver = "{% url 'ver_todo' 1234 %}".replace(/1234/, lista[0]+'-'+lista[1])
+                                                let urlver = "{% url 'ver_todo' 1234 0 %}".replace(/1234/, lista[0]+'-'+lista[1])
                                                 contlista.innerHTML+= `<a href=${urlver} class="btn btn-info col-md-4 mx-auto">Ver más</a>`
                                             }
                                         }

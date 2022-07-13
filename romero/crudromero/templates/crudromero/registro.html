@@ -16,7 +16,7 @@
 				class="form-control col-md-3"
 				name="fecha"
 				id="fecha"
-				value="2013-01-08"
+				value="{{ paciente.fecha }}"
 				required
 			/>
 			<!-- A "value" le asigno un texto placeholder por el momento -->
@@ -122,13 +122,13 @@
 			/>
 		</div>
 		<div class="col-md-6">
-			<label for="region_satinaria">Region sanitaria</label>
+			<label for="region_sanitaria">Region sanitaria</label>
 			<input
 				type="text"
 				class="form-control col-md-3"
-				name="region_satinaria"
-				id="region_satinaria"
-				value="{{ paciente.region_satinaria }}"
+				name="region_sanitaria"
+				id="region_sanitaria"
+				value="{{ paciente.region_sanitaria }}"
 			/>
 		</div>
 	</div>
@@ -185,6 +185,9 @@
 			<div class="form-group">
 				<label for="derivacion">Derivacion</label>
 				<select class="form-control" name="derivacion" id="derivacion">
+                    <option selected disabled hidden>
+                    {{ paciente.derivacion }}
+                    </option>
 					<option>Consultorios externos del hospital</option>
 					<option>Región sanitaria XI</option>
 					<option>Region Sanitaria VI</option>
@@ -214,7 +217,7 @@
 		</div>
 	</div>
 	<button type="submit" class="btn btn-primary w-25 mx-auto mt-3">
-		Agregar
+		{{ button }}
 	</button>
 </form>
 {% endblock %}

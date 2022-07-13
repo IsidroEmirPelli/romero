@@ -19,15 +19,16 @@ def registro(request):
         else:
             print(form.errors)
 
-    return render(request, 'crudromero/registro.html')
+    context = {'button': 'Agregar'}
+    return render(request, 'crudromero/registro.html', context)
 
 def vista(request, id):
     context = {'paciente': Paciente.objects.get(id=id)}
     return render(request, 'crudromero/ver.html', context)
 
-def get_query_result(text, all=False):
+def get_query_result(text, all=False, fin=0):
 
-    limit = 5 if not all else None
+    limit = 5 if not all else fin
 
     if text[1] == 'undefined':
         if text[0].isdigit():
@@ -42,8 +43,13 @@ def get_query_result(text, all=False):
 
     return pacientes
 
-def ver_todo(request, text):
-    context = {'pacientes': get_query_result(text.split('-'), True)}
+def ver_todo(request, text, fin):
+
+    context = {
+            'texto': text,
+            'fin': fin,
+            'pacientes': get_query_result(text.split('-'), True, fin),
+    }
 
     return render(request, 'crudromero/ver_todo.html', context)
 
@@ -53,11 +59,11 @@ def modificar(request, id):
         form = PacienteForm(request.POST, instance=paciente)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('inicio')
         else:
             print(form.errors)
     
-    context = {'paciente': paciente}
+    context = {'paciente': paciente, 'button': 'Modificar'}
     return render(request, 'crudromero/registro.html', context)
 
 @api_view(['GET'])
