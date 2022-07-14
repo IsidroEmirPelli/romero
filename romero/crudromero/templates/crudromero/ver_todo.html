@@ -27,6 +27,7 @@
 {% endblock %}
 {% block div %}
     <div class="d-flex justify-content-end">
-        <a href="{% url 'ver_todo' text fin %}" class="btn btn-primary w-25 mt-3 {{ d_none }}" style="max-width: 10%; margin-right: 2%">Ver más</a>
+        <a href="{% url 'ver_todo' text fin 'back' %}" class="btn btn-primary w-25 mt-3 {{ d_none_back }}" style="max-width: 10%; margin-right: 2%">Página anterior</a>
+        <a href="{% url 'ver_todo' text fin 'next' %}" class="btn btn-primary w-25 mt-3 {{ d_none_next }}" style="max-width: 10%; margin-right: 2%">Página siguiente</a>
     </div>
 {% endblock %}
