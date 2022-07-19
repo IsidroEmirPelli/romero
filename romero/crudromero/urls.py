@@ -8,4 +8,5 @@ urlpatterns = [
     path('ver-todo/<str:text>/<int:fin>/<str:anchor>/', views.ver_todo, name='ver_todo'),
     path('ver/<str:id>', views.vista, name='vista'),
     path('modificar/<int:id>', views.modificar, name='modificar'),
+    path('eliminar/<int:id>/', views.eliminar, name='eliminar'),
 ]

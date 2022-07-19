@@ -20,6 +20,6 @@
         <td>{{ paciente.auxilio }}</td>
         <td>{{ paciente.intervencion }}</td>
         <td>{{ paciente.profesionales }}</td>
-        <td></td>
+        <td><a class="btn btn-primary" href="{% url 'modificar' paciente.id %}">Modificar</a><button class="btn btn-danger mt-1" onclick="delete_elem('{{ paciente.id }}')">Eliminar</button></td>
     </tr>
 {% endblock %}

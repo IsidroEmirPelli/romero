@@ -1,7 +1,7 @@
 {% extends 'crudromero/layout_ver.html' %}
 {% block tbody %}
     {% for paciente in pacientes %}
-    <tr>
+    <tr id="{{paciente.id}}">
         <td>{{ paciente.fecha }}</td>
         <td>{{ paciente.hora }}</td>
         <td>{{ paciente.apellido }}</td>
@@ -21,7 +21,7 @@
         <td>{{ paciente.auxilio }}</td>
         <td>{{ paciente.intervencion }}</td>
         <td>{{ paciente.profesionales }}</td>
-        <td></td>
+        <td><a class="btn btn-primary" href="{% url 'modificar' paciente.id %}">Modificar</a><button class="btn btn-danger mt-1" onclick="delete_elem('{{ paciente.id }}')">Eliminar</button></td>
     </tr>
     {% endfor %}
 {% endblock %}

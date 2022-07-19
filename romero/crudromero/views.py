@@ -84,3 +84,10 @@ def get_data(request):
     print(serializer.data)
 
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+def eliminar(request, id):
+    if request.method == 'DELETE':
+        paciente = Paciente.objects.get(id=id)
+        paciente.delete()
+    return redirect('inicio')
