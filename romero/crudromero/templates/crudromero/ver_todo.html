@@ -1,33 +1,49 @@
-{% extends 'crudromero/layout_ver.html' %}
-{% block tbody %}
-    {% for paciente in pacientes %}
-    <tr id="{{paciente.id}}">
-        <td>{{ paciente.fecha }}</td>
-        <td>{{ paciente.hora }}</td>
-        <td>{{ paciente.apellido }}</td>
-        <td>{{ paciente.nombre }}</td>
-        <td>{{ paciente.edad }}</td>
-        <td>{{ paciente.dni }}</td>
-        <td>{{ paciente.sexo }}</td>
-        <td>{{ paciente.domicilio }}</td>
-        <td>{{ paciente.telefono }}</td>
-        <td>{{ paciente.barrio }}</td>
-        <td>{{ paciente.region_sanitaria }}</td>
-        <td>{{ paciente.motivo_consulta }}</td>
-        <td>{{ paciente.evaluacion }}</td>
-        <td>{{ paciente.tratamiento_psicofarm }}</td>
-        <td>{{ paciente.internacion }}</td>
-        <td>{{ paciente.derivacion }}</td>
-        <td>{{ paciente.auxilio }}</td>
-        <td>{{ paciente.intervencion }}</td>
-        <td>{{ paciente.profesionales }}</td>
-        <td><a class="btn btn-primary" href="{% url 'modificar' paciente.id %}">Modificar</a><button class="btn btn-danger mt-1" onclick="delete_elem('{{ paciente.id }}')">Eliminar</button></td>
-    </tr>
-    {% endfor %}
-{% endblock %}
-{% block div %}
-    <div class="d-flex justify-content-end">
-        <a href="{% url 'ver_todo' text fin 'back' %}" class="btn btn-primary w-25 mt-3 {{ d_none_back }}" style="max-width: 10%; margin-right: 2%">Página anterior</a>
-        <a href="{% url 'ver_todo' text fin 'next' %}" class="btn btn-primary w-25 mt-3 {{ d_none_next }}" style="max-width: 10%; margin-right: 2%">Página siguiente</a>
-    </div>
+{% extends 'crudromero/layout_ver.html' %} {% block tbody %} {% for paciente in
+pacientes %}
+<tr id="{{paciente.id}}">
+	<td>{{ paciente.fecha }}</td>
+	<td>{{ paciente.hora }}</td>
+	<td>{{ paciente.apellido }}</td>
+	<td>{{ paciente.nombre }}</td>
+	<td>{{ paciente.edad }}</td>
+	<td>{{ paciente.dni }}</td>
+	<td>{{ paciente.sexo }}</td>
+	<td>{{ paciente.domicilio }}</td>
+	<td>{{ paciente.telefono }}</td>
+	<td>{{ paciente.barrio }}</td>
+	<td>{{ paciente.region_sanitaria }}</td>
+	<td>{{ paciente.motivo_consulta }}</td>
+	<td>{{ paciente.evaluacion }}</td>
+	<td>{{ paciente.tratamiento_psicofarm }}</td>
+	<td>{{ paciente.internacion }}</td>
+	<td>{{ paciente.derivacion }}</td>
+	<td>{{ paciente.auxilio }}</td>
+	<td>{{ paciente.intervencion }}</td>
+	<td>{{ paciente.profesionales }}</td>
+	<td>
+		<a class="btn btn-primary" href="{% url 'modificar' paciente.id %}"
+			>Modificar</a
+		><button
+			class="btn btn-danger mt-1"
+			onclick="delete_elem('{{ paciente.id }}')"
+		>
+			Eliminar
+		</button>
+	</td>
+</tr>
+{% endfor %} {% endblock %} {% block div %}
+<div class="d-flex justify-content-end">
+	<a
+		href="{% url 'ver_todo' text fin 'back' %}"
+		class="btn btn-primary w-25 mt-3 {{ d_none_back }}"
+		style="max-width: 10%; margin-right: 2%"
+		>Página anterior</a
+	>
+	<a
+		href="{% url 'ver_todo' text fin 'next' %}"
+		class="btn btn-primary w-25 mt-3 {{ d_none_next }}"
+		style="max-width: 10%; margin-right: 2%"
+		>Página siguiente</a
+	>
+</div>
 {% endblock %}
