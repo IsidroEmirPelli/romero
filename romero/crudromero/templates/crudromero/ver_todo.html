@@ -1,37 +1,56 @@
-{% extends 'crudromero/layout_ver.html' %} {% block tbody %} {% for paciente in
-pacientes %}
-<tr id="{{paciente.id}}">
-	<td>{{ paciente.fecha }}</td>
-	<td>{{ paciente.hora }}</td>
-	<td>{{ paciente.apellido }}</td>
-	<td>{{ paciente.nombre }}</td>
-	<td>{{ paciente.edad }}</td>
-	<td>{{ paciente.dni }}</td>
-	<td>{{ paciente.sexo }}</td>
-	<td>{{ paciente.domicilio }}</td>
-	<td>{{ paciente.telefono }}</td>
-	<td>{{ paciente.barrio }}</td>
-	<td>{{ paciente.region_sanitaria }}</td>
-	<td>{{ paciente.motivo_consulta }}</td>
-	<td>{{ paciente.evaluacion }}</td>
-	<td>{{ paciente.tratamiento_psicofarm }}</td>
-	<td>{{ paciente.internacion }}</td>
-	<td>{{ paciente.derivacion }}</td>
-	<td>{{ paciente.auxilio }}</td>
-	<td>{{ paciente.intervencion }}</td>
-	<td>{{ paciente.profesionales }}</td>
-	<td>
-		<a class="btn btn-primary" href="{% url 'modificar' paciente.id %}"
-			>Modificar</a
-		><button
-			class="btn btn-danger mt-1"
-			onclick="delete_elem('{{ paciente.id }}')"
-		>
-			Eliminar
-		</button>
-	</td>
-</tr>
-{% endfor %} {% endblock %} {% block div %}
+{% extends 'crudromero/layout.html' %} {% block content %}
+<div class="container">
+	<div
+		class="table-responsive table-sm rounded border border-dark scrollbar"
+		style="height: 30rem"
+	>
+		<table class="table table-dark table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Hora</th>
+					<th>Apellido</th>
+					<th>Nombre</th>
+					<th>Edad</th>
+					<th>DNI</th>
+					<th>Sexo</th>
+					<th>Domicilio</th>
+					<th>Teléfono</th>
+					<th>Barrio/Localidad</th>
+					<th>Internación</th>
+					<th>Derivación</th>
+					<th>Auxilio a sala</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for paciente in pacientes %}
+				<tr id="{{paciente.id}}">
+					<td>{{ paciente.fecha }}</td>
+					<td>{{ paciente.hora }}</td>
+					<td>{{ paciente.apellido }}</td>
+					<td>{{ paciente.nombre }}</td>
+					<td>{{ paciente.edad }}</td>
+					<td>{{ paciente.dni }}</td>
+					<td>{{ paciente.sexo }}</td>
+					<td>{{ paciente.domicilio }}</td>
+					<td>{{ paciente.telefono }}</td>
+					<td>{{ paciente.barrio }}</td>
+					<td>{{ paciente.internacion }}</td>
+					<td>{{ paciente.derivacion }}</td>
+					<td>{{ paciente.auxilio }}</td>
+					<td>
+						<a href="{% url 'vista' paciente.id %}" class="btn btn-primary"
+							>Ver</a
+						>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %} {% block div %}
 <div class="d-flex justify-content-end">
 	<a
 		href="{% url 'ver_todo' text fin 'back' %}"

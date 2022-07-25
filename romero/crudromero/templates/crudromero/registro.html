@@ -113,13 +113,30 @@
 	<div class="row mb-3">
 		<div class="col-md-6">
 			<label for="barrio">Barrio</label>
-			<input
-				type="text"
-				class="form-control col-md-3"
-				name="barrio"
-				id="barrio"
-				value="{{ paciente.barrio }}"
-			/>
+			<select class="form-control" name="barrio" id="barrio" required>
+				<option selected disabled hidden>{{ paciente.barrio }}</option>
+				<option>Villa Elvira</option>
+				<option>Tolosa</option>
+				<option>Ringuelet</option>
+				<option>Manuel B. Gonnet</option>
+				<option>José Hernández</option>
+				<option>Joaquín Gorina</option>
+				<option>Los Hornos</option>
+				<option>San Carlos</option>
+				<option>City Bell</option>
+				<option>Savoia</option>
+				<option>Altos de San Lorenzo</option>
+				<option>Villa Elisa</option>
+				<option>El Peligro</option>
+				<option>Arturo Seguí</option>
+				<option>Melchor Romero</option>
+				<option>Colonia Urquiza</option>
+				<option>Abasto</option>
+				<option>Lisandro Olmos</option>
+				<option>Ángel Etcheverry</option>
+				<option>Eduardo Arana</option>
+				<option>Otro</option>
+			</select>
 		</div>
 		<div class="col-md-6">
 			<label for="region_sanitaria">Region sanitaria</label>
@@ -156,7 +173,8 @@
 	<div class="row mb-3">
 		<div class="form-group">
 			<label for="evaluacion">Evaluacion</label>
-			<textarea class="form-control" name="evaluacion" id="evaluacion" rows="3">{{ paciente.id }}</textarea
+			<textarea class="form-control" name="evaluacion" id="evaluacion" rows="3">
+{{ paciente.id }}</textarea
 			>
 		</div>
 	</div>
@@ -185,9 +203,7 @@
 			<div class="form-group">
 				<label for="derivacion">Derivacion</label>
 				<select class="form-control" name="derivacion" id="derivacion">
-                    <option selected disabled hidden>
-                    {{ paciente.derivacion }}
-                    </option>
+					<option selected disabled hidden>{{ paciente.derivacion }}</option>
 					<option>Consultorios externos del hospital</option>
 					<option>Región sanitaria XI</option>
 					<option>Region Sanitaria VI</option>
@@ -219,5 +235,15 @@
 	<button type="submit" class="btn btn-primary w-25 mx-auto mt-3">
 		{{ button }}
 	</button>
+	{% load static %} {% if button == 'Modificar' %}
+	<button
+		type="button"
+		class="btn btn-primary w-25 mx-auto mt-3"
+		onclick="nueva_visita('{{paciente.id}}')"
+	>
+		Añadir visita
+	</button>
+	<script src="{% static 'js/nueva_visita.js' %}"></script>
+	{% endif %}
 </form>
 {% endblock %}

@@ -1,25 +1,237 @@
-{% extends 'crudromero/layout_ver.html' %}
-{% block tbody %}
-    <tr>
-        <td>{{ paciente.fecha }}</td>
-        <td>{{ paciente.hora }}</td>
-        <td>{{ paciente.apellido }}</td>
-        <td>{{ paciente.nombre }}</td>
-        <td>{{ paciente.edad }}</td>
-        <td>{{ paciente.dni }}</td>
-        <td>{{ paciente.sexo }}</td>
-        <td>{{ paciente.domicilio }}</td>
-        <td>{{ paciente.telefono }}</td>
-        <td>{{ paciente.barrio }}</td>
-        <td>{{ paciente.region_sanitaria }}</td>
-        <td>{{ paciente.motivo_consulta }}</td>
-        <td>{{ paciente.evaluacion }}</td>
-        <td>{{ paciente.tratamiento_psicofarm }}</td>
-        <td>{{ paciente.internacion }}</td>
-        <td>{{ paciente.derivacion }}</td>
-        <td>{{ paciente.auxilio }}</td>
-        <td>{{ paciente.intervencion }}</td>
-        <td>{{ paciente.profesionales }}</td>
-        <td><a class="btn btn-primary" href="{% url 'modificar' paciente.id %}">Modificar</a><button class="btn btn-danger mt-1" onclick="delete_elem('{{ paciente.id }}')">Eliminar</button></td>
-    </tr>
+{% extends 'crudromero/layout.html' %} {% block content %}
+<div class="container p-2 text-black">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="card" style="background-color: #d8d8d8">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="card" style="height: 5rem; background-color: #efefef">
+								<div class="card-body text-center">
+									<h6>Fecha y hora de ingreso</h6>
+									<h6>{{paciente.fecha}} {{paciente.hora}}</h6>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="card" style="height: 5rem; background-color: #efefef">
+								<div class="card-body text-center mt-2">
+									<h6 class="d-inline">
+										{{paciente.nombre}} {{paciente.apellido}}
+									</h6>
+									<h6 class="d-inline mx-5">DNI: {{paciente.dni}}</h6>
+									<h6 class="d-inline">Edad: {{paciente.edad}}</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card mt-2" style="background-color: #efefef">
+						<div class="card-body text-center mb-2">
+							<div class="row mb-3">
+								<div class="col-md-4">
+									<div class="card">
+										<div class="card-body">
+											<h6>Sexo</h6>
+											<input
+												type="text"
+												class="form-control text-center"
+												value="{{paciente.sexo}}"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="card">
+										<div class="card-body">
+											<h6>Domicilio y Barrio</h6>
+											<input
+												type="text"
+												class="form-control text-center"
+												value="{{paciente.domicilio}}, {{paciente.barrio}}"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="card">
+										<div class="card-body">
+											<h6>Teléfono</h6>
+											<input
+												type="text"
+												class="form-control text-center"
+												value="{{paciente.telefono}}"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="card">
+										<div class="card-body">
+											<h6>Región sanitaria</h6>
+											<input
+												type="text"
+												class="form-control text-center"
+												value="{{paciente.region_sanitaria}}"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="card">
+										<div class="card-body">
+											<h6>Internación</h6>
+											<input
+												type="text"
+												class="form-control text-center"
+												value="{{paciente.internacion}}"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="card">
+										<div class="card-body">
+											<h6>Derivación</h6>
+											<input
+												type="text"
+												class="form-control text-center"
+												value="{{paciente.derivacion}}"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-body">
+											<h6>Tratamiento psicofarmacológico</h6>
+											<input
+												type="text"
+												class="form-control text-center"
+												value="{{paciente.tratamiento_psicofarm}}"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-8">
+									<div class="card">
+										<div class="card-body">
+											<h6>Intervencion</h6>
+											<input
+												type="text"
+												class="form-control text-center"
+												value="{{paciente.intervencion}}"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="card">
+										<div class="card-body">
+											<h6>Auxilio</h6>
+											<input
+												type="text"
+												class="form-control text-center"
+												value="{{paciente.auxilio}}"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-body">
+											<h6>Motivo</h6>
+											<textarea class="form-control" rows="3" disabled>
+{{paciente.motivo_consulta}}</textarea
+											>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-body">
+											<h6>Evaluacion</h6>
+											<textarea class="form-control" rows="3" disabled>
+{{paciente.evaluacion}}</textarea
+											>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-body">
+											<h6>Profesionales</h6>
+											<textarea class="form-control" rows="3" disabled>
+{{paciente.profesionales}}</textarea
+											>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div
+				class="card mb-3"
+				style="background-color: #d8d8d8; height: 100%; max-height: 68.7rem"
+			>
+				<div class="card-body text-decoration-none text-center overflow-auto">
+					<h5>Visitas</h5>
+					<table
+						class="table table-responsive table-bordered"
+						style="max-height: 2rem; border: black; font-size: 0.8rem"
+					>
+						<thead>
+							<tr>
+								<th>Fecha</th>
+								<th>Hora</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for visita in visitas %}
+							<tr>
+								<td>{{visita.fecha}}</td>
+								<td>{{visita.hora}}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="text-center mt-2">
+	<a class="btn btn-primary" href="{% url 'modificar' paciente.id %}"
+		>Modificar</a
+	>
+	<button class="btn btn-danger" onclick="delete_elem('{{ paciente.id }}')">
+		Eliminar
+	</button>
+</div>
+{% load static %}
+<script src="{% static 'js/delete.js' %}"></script>
 {% endblock %}

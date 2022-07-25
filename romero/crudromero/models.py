@@ -21,3 +21,10 @@ class Paciente(models.Model):
     auxilio = models.CharField(max_length=100, blank=True)
     intervencion = models.CharField(max_length=100, blank=True)
     profesionales = models.TextField()
+    visitas = models.BooleanField(default=False)
+
+
+class Visita(models.Model):
+    fecha = models.CharField(max_length=10)
+    hora = models.CharField(max_length=5)
+    paciente_id = models.ForeignKey(Paciente, on_delete=models.CASCADE)
