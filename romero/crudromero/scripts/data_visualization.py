@@ -24,7 +24,6 @@ def data_visualization(total_dict):
     torta_por_region_sanitaria(df)
 
     total_dict['total'] = total
-    print(total_dict)
 
 
 def get_all_internaciones(df):
@@ -96,10 +95,9 @@ def torta_por_region_sanitaria(df):
     data = df['region_sanitaria'].value_counts()
     labels = list(data.keys())
     sizes = data
-    explode = (0.1, 0, 0)
 
     _, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+    ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
             shadow=True, startangle=90)
     ax1.axis('equal')
 

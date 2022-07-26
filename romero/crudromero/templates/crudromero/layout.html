@@ -13,9 +13,9 @@
 		<script src="{% static 'js/bootstrap.min.js' %}"></script>
 	</head>
 	<body style="background-color: #efefef">
-		{% include 'crudromero/partials/_navbar.html'%}
+		{% include 'crudromero/partials/_navbar.html' %}
 		<div class="container p-2 text-black">
-			{% block content %} {% endblock %}
+			{% block content %} {% endblock %} {% block div %} {% endblock %}
 		</div>
 		{% include 'crudromero/partials/_footer.html'%}
 	</body>
