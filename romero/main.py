@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QApplication
 
 def start_django():
     django_server = Popen(['python', 'manage.py', 'runserver'], shell=True)
-    return django_server.pid
+    return django_server
 
 
 def generate_browser():
@@ -22,9 +22,9 @@ def generate_browser():
 
 
 if __name__ == '__main__':
-    pid = start_django()  # Start django server and get the process id
+    django_server = start_django()  # Start django server and get the process id
     generate_browser()
     try:
-        kill(pid, CTRL_BREAK_EVENT)
+        kill(django_server.pid, CTRL_BREAK_EVENT)
     except:
-        pass
+        django_server.terminate()

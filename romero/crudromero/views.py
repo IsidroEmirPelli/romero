@@ -1,27 +1,38 @@
+from multiprocessing import Process, Manager
 from django.shortcuts import render, redirect
 from .forms import PacienteForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Paciente, Visita
 from .serializer import PacienteSerializer
-from datetime import date, datetime
+from datetime import datetime
+from .scripts.data_visualization import data_visualization
+from rest_framework import status
 
 
 def inicio(request):
+    """ Muestra la ventana de inicio """
     return render(request, 'crudromero/index.html')
 
 
 def registro(request):
+    """ Registra a los usuarios a través de una petición POST.
+    Si los datos del formulario son correctos estos se guardan en la base de datos.
+    El 'context' de la template contiene el valor del texto del botón.
+    """
     if request.method == 'POST':
-        print(request.POST.get)
+        # Obtengo los datos del formulario y realizo la verificación.
         form = PacienteForm(request.POST)
         if form.is_valid():
-            form.save()
+            form.save()  # Guardo en la base de datos.
             return redirect('inicio')
         else:
             print(form.errors)
 
+    # 'Registro' y 'Modificar' utilizan la misma plantilla.
+    # Ya que me encuentro en 'Registro', el texto del botón será 'Agregar'.
     context = {'button': 'Agregar'}
+
     return render(request, 'crudromero/registro.html', context)
 
 
@@ -34,7 +45,9 @@ def vista(request, id):
         paciente_id=paciente) if paciente.visitas else None  # Si realizó más de una visita, accedo a la tabla 'Visita'.
 
     context = {
+        # Datos del paciente (contiene la primer visita).
         'paciente': paciente,
+        # Todas sus visitas (menos la primera) con fecha y hora.
         'visitas': visitas,
     }
 
@@ -42,10 +55,21 @@ def vista(request, id):
 
 
 def get_query_result(text, all=False, fin=0, anchor=None, grow_value=100):
+    """ Devuelve una consulta con la cantidad de pacientes deseados.
+        Parámetros:
+            text: Lista con el DNI y Nombre del paciente.
+            all: Booleano que indica si se debe devolver una query con la cantidad definida por 'grow_value'.    
+            fin:  Indica el último valor del valor inicial del rango de búsqueda.
+            anchor: Controla el `volver a página anterior` o `página siguiente` según su valor ('next' o 'back').
+            grow_value: Es la cantidad de elementos que se consultarán.
+    """
 
+    # Obtiene el límite de la consulta.
+    # Si no se desea obtener 'todo', sólamente se consultan 5 elementos.
     start_value, limit = (0, 5) if not all else (
         fin, fin + grow_value) if anchor == 'next' else (fin - (grow_value*2), fin - grow_value)
 
+    # Si se realizó la búsqueda con un solo dato, verifico si es el `DNI` o el `Nombre`.
     if text[1] == 'undefined':
         if text[0].isdigit():
             pacientes = Paciente.objects.filter(dni__startswith=text[0])[
@@ -54,29 +78,41 @@ def get_query_result(text, all=False, fin=0, anchor=None, grow_value=100):
             pacientes = Paciente.objects.filter(nombre__startswith=text[0])[
                 start_value:limit+1]
     else:
+        # Si se realizó la búsqueda con 2 datos, verifico cuál es el `DNI` y cuál el `Nombre`.
         if text[0].isdigit():
+            # Obtengo 1 dato más que el límite para saber si quedaron más pacientes.
             pacientes = Paciente.objects.filter(
                 dni__startswith=text[0], nombre__startswith=text[1])[start_value:limit+1]
         else:
             pacientes = Paciente.objects.filter(
                 dni__startswith=text[1], nombre__startswith=text[0])[start_value:limit+1]
 
+    # Verficio si quedaron más pacientes.
+    # Esto es para saber cuándo dejar de mostrar el botón "Página siguiente".
     more = len(pacientes) == (limit-start_value)+1 and len(pacientes) != 0
 
+    # Devuelvo los pacientes sin el último dato, el nuevo valor inicial del rango, y la variable
+    # para saber si quedaron más pacientes para consultar.
     return pacientes[:limit-start_value], limit, more
 
 
 def ver_todo(request, text, fin, anchor):
+    """ Devuelve la cantidad de pacientes disponibles dentro del rango definido por
+    'grow_values'. En caso de haber más, se habilitará un botón para realizar otra consulta con los 
+    mismos datos ya consultados (DNI/Nombre).
+    """
 
-    grow_value = 100
+    grow_value = 100  # Cantidad de elementos que devolverá la vista.
 
+    # Obtengo los datos de la consulta.
     pacientes, fin, more = get_query_result(
         text.split('-'), True, fin, anchor, grow_value)
-    print(more)
+
     context = {
         'text': text,
         'fin': fin,
         'pacientes': pacientes,
+        # Valores para ocultar/mostrar los botones de `página anterior` o `página siguiente`.
         'd_none_back': ('d-none' if fin == grow_value else ''),
         'd_none_next': ('d-none' if not more else ''),
     }
@@ -85,6 +121,9 @@ def ver_todo(request, text, fin, anchor):
 
 
 def modificar(request, id):
+    """ Actualiza los datos del paciente guardado en la base de datos
+    con la nueva información modificada.
+    """
     paciente = Paciente.objects.get(id=id)
     if request.method == 'POST':
         form = PacienteForm(request.POST, instance=paciente)
@@ -94,40 +133,71 @@ def modificar(request, id):
         else:
             print(form.errors)
 
+    # El valor del botón de la ventana tendrá el texto 'Modificar' (ya que se comparte
+    # el template con la función de 'Registro').
     context = {'paciente': paciente, 'button': 'Modificar'}
+
     return render(request, 'crudromero/registro.html', context)
+
+
+def estadisticas(request):
+    """ Creación y vista de las estadísticas de datos """
+    manager = Manager()
+    total_dict = manager.dict()
+
+    p1 = Process(target=data_visualization, args=[total_dict])
+    p1.start()
+    p1.join()
+
+    context = {
+        'total': total_dict['total'],
+    }
+
+    return render(request, 'crudromero/estadisticas.html', context)
 
 
 @api_view(['GET'])
 def get_data(request):
-    # Return all data startswith request.GET['text']
+    """ Retorna 5 pacientes según un conjunto 'DNI-NOMBRE' ó 'NOMBRE-DNI' recibido a través
+    de la petición.
+    """
+    # Retorna toda la información de los pacientes. que coincidan con el DNI o el Nombre.
     text = request.GET['text'].split('-')
     pacientes, _, _ = get_query_result(text, False)
     serializer = PacienteSerializer(pacientes, many=True)
-    print(serializer.data)
 
+    # Retorna los datos en un diccionario.
     return Response(serializer.data)
 
 
 @api_view(['DELETE'])
 def eliminar(request, id):
+    """ Elimina al paciente de la `id` proporcionada. """
     if request.method == 'DELETE':
         paciente = Paciente.objects.get(id=id)
         paciente.delete()
-    return redirect('inicio')
+
+        return Response(status=status.HTTP_202_ACCEPTED)
+
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
 def nueva_visita(request, id):
+    """ Añado una nueva visita a la tabla 'Visita', con la fecha y hora actual. Relaciono
+    la nueva fila de la tabla con el paciente al que pertenecen estos datos.
+    """
     if request.method == 'POST':
         paciente = Paciente.objects.get(id=id)
+        # Si el paciente no realizó más de 1 visita, cambio el valor de la variable que
+        # me indica esto.
         if not paciente.visitas:
             paciente.visitas = True
             paciente.save()
-            print('Visita creada')
 
-        now = datetime.now()
+        now = datetime.now()  # Obtengo la fecha y hora actual.
         visita_act = Visita.objects.create(
             fecha=now.date(), hora=now.strftime("%H:%M"), paciente_id=paciente)
         visita_act.save()
-    return redirect('inicio')
+        return Response(status=status.HTTP_202_ACCEPTED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)

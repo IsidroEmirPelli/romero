@@ -100,7 +100,7 @@
 			/>
 		</div>
 		<div class="col-md-3">
-			<label for="telefono">Telefono</label>
+			<label for="telefono">Teléfono</label>
 			<input
 				type="number"
 				class="form-control col-md-1"
@@ -139,19 +139,24 @@
 			</select>
 		</div>
 		<div class="col-md-6">
-			<label for="region_sanitaria">Region sanitaria</label>
-			<input
-				type="text"
-				class="form-control col-md-3"
+			<label for="region_sanitaria">Región sanitaria</label>
+			<select
+				class="form-control"
 				name="region_sanitaria"
 				id="region_sanitaria"
-				value="{{ paciente.region_sanitaria }}"
-			/>
+			>
+				<option selected disabled hidden>
+					{{ paciente.region_sanitaria }}
+				</option>
+				<option>Región sanitaria XI</option>
+				<option>Región Sanitaria VI</option>
+				<option>Otras</option>
+			</select>
 		</div>
 	</div>
 	<div class="row mb-3">
 		<div class="col-md-6">
-			<label for="intervencion">Intervencion</label>
+			<label for="intervencion">Intervención</label>
 			<input
 				id="intervencion"
 				type="text"
@@ -172,7 +177,7 @@
 	</div>
 	<div class="row mb-3">
 		<div class="form-group">
-			<label for="evaluacion">Evaluacion</label>
+			<label for="evaluacion">Evaluación</label>
 			<textarea class="form-control" name="evaluacion" id="evaluacion" rows="3">
 {{ paciente.id }}</textarea
 			>
@@ -180,7 +185,7 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col-md-4">
-			<label for="tratamiento_psicofarm">Tratamiento psicofarmacologico</label>
+			<label for="tratamiento_psicofarm">Tratamiento psicofarmacológico</label>
 			<input
 				id="tratamiento_psicofarm"
 				type="text"
@@ -191,7 +196,7 @@
 		</div>
 		<div class="col-md-2">
 			<div class="form-group">
-				<label for="internacion">Internacion</label>
+				<label for="internacion">Internación</label>
 				<select class="form-control" name="internacion" id="internacion">
 					<option>Voluntaria</option>
 					<option>Involuntaria</option>
@@ -201,12 +206,12 @@
 		</div>
 		<div class="col-md-4">
 			<div class="form-group">
-				<label for="derivacion">Derivacion</label>
+				<label for="derivacion">Derivación</label>
 				<select class="form-control" name="derivacion" id="derivacion">
 					<option selected disabled hidden>{{ paciente.derivacion }}</option>
 					<option>Consultorios externos del hospital</option>
 					<option>Región sanitaria XI</option>
-					<option>Region Sanitaria VI</option>
+					<option>Región Sanitaria VI</option>
 					<option>Otras</option>
 				</select>
 			</div>
@@ -215,7 +220,7 @@
 			<label for="auxilio">Auxilio</label>
 			<select class="form-control" name="auxilio" id="auxilio">
 				<option>Sala</option>
-				<option>Guardia clinica</option>
+				<option>Guardia clínica</option>
 			</select>
 		</div>
 	</div>
