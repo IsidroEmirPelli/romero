@@ -13,18 +13,23 @@ def data_visualization(total_dict):
     df_visitas = pd.read_sql_query('SELECT * FROM crudromero_visita', conn)
     conn.close()
 
-    involuntario, voluntario, no = get_all_internaciones(df)
+    # Checkeo si la base de datos no está vacía.
+    if len(df != 0):
 
-    total = involuntario + voluntario + no
-    torta_por_barrio(df)
-    torta_internados(involuntario, voluntario)
-    get_days_data(df, df_visitas)
-    torta_pacientes_total_internados(total, involuntario + voluntario)
-    torta_pacientes_por_derivacion(df)
-    torta_por_region_sanitaria(df)
+        involuntario, voluntario, no = get_all_internaciones(df)
 
-    total_dict['total'] = total
+        total = involuntario + voluntario + no
+        torta_por_barrio(df)
+        torta_internados(involuntario, voluntario)
+        get_days_data(df, df_visitas)
+        torta_pacientes_total_internados(total, involuntario + voluntario)
+        torta_pacientes_por_derivacion(df)
+        torta_por_region_sanitaria(df)
 
+        total_dict['total'] = total
+
+    else:
+        total_dict['total'] = None
 
 def get_all_internaciones(df):
     """Esta funcion devuelve el total de pacientes con internacion voluntaria, involuntaria y No."""
