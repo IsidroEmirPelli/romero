@@ -6,6 +6,7 @@ from signal import CTRL_BREAK_EVENT
 from PyQt5.Qt import *
 from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtGui import QIcon
 
 
 def start_django():
@@ -16,6 +17,7 @@ def start_django():
 def generate_browser():
     app = QApplication(argv)
     app.setApplicationName("Base de datos - Romero")
+    app.setWindowIcon(QIcon('icono.ico'))
     web = QWebEngineView()
     web.load(QUrl("http://127.0.0.1:8000"))
     web.showMaximized()
