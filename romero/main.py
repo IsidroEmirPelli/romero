@@ -7,7 +7,6 @@ from PyQt5.Qt import *
 from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QSettings
 
 def start_django():
     django_server = Popen(['python', 'manage.py', 'runserver', '--insecure'], shell=True)
