@@ -86,6 +86,11 @@
 			<div class="form-group">
 				<label for="sexo">Sexo</label>
 				<select class="form-control" name="sexo" id="sexo">
+					{% if paciente.sexo %}
+					<option selected hidden>{{ paciente.sexo }}</option>
+					{% else %}
+					<option disabled selected>Selecciona un opción</option>
+					{% endif %}
 					<option>Hombre</option>
 					<option>Mujer</option>
 					<option>Otro</option>
@@ -117,7 +122,7 @@
 		<div class="col-md-6">
 			<label for="barrio">Barrio</label>
 			<select class="form-control" name="barrio" id="barrio" required>
-				<option selected disabled hidden>{{ paciente.barrio }}</option>
+				<option selected hidden>{{ paciente.barrio }}</option>
 				<option>Villa Elvira</option>
 				<option>Tolosa</option>
 				<option>Ringuelet</option>
@@ -147,10 +152,9 @@
 				class="form-control"
 				name="region_sanitaria"
 				id="region_sanitaria"
-			>
-				<option selected disabled hidden>
-					{{ paciente.region_sanitaria }}
-				</option>
+				required
+				>
+				<option selected hidden>{{ paciente.region_sanitaria }}</option>
 				<option>Región sanitaria XI</option>
 				<option>Región Sanitaria VI</option>
 				<option>Otras</option>
@@ -187,20 +191,18 @@
 		</div>
 	</div>
 	<div class="row mb-3">
-		<div class="col-md-4">
+		<div class="col-md-12">
 			<label for="tratamiento_psicofarm">Tratamiento psicofarmacológico</label>
-			<input
-				id="tratamiento_psicofarm"
-				type="text"
-				class="form-control col-md-3"
-				name="tratamiento_psicofarm"
-				value="{{ paciente.tratamiento_psicofarm }}"
-			/>
+			<textarea class="form-control" name="tratamiento_psicofarm" id="tratamiento_psicofarm" rows="2">
+{{ paciente.tratamiento_psicofarm }}</textarea>
 		</div>
-		<div class="col-md-2">
+	</div>
+	<div class="row mb-3">
+		<div class="col-md-4">
 			<div class="form-group">
 				<label for="internacion">Internación</label>
-				<select class="form-control" name="internacion" id="internacion">
+				<select class="form-control" name="internacion" id="internacion" required>
+					<option selected hidden>{{ paciente.internacion }}</option>
 					<option>Voluntaria</option>
 					<option>Involuntaria</option>
 					<option>No</option>
@@ -210,8 +212,8 @@
 		<div class="col-md-4">
 			<div class="form-group">
 				<label for="derivacion">Derivación</label>
-				<select class="form-control" name="derivacion" id="derivacion">
-					<option selected disabled hidden>{{ paciente.derivacion }}</option>
+				<select class="form-control" name="derivacion" id="derivacion" required>
+					<option selected hidden>{{ paciente.derivacion }}</option>
 					<option>Consultorios externos del hospital</option>
 					<option>Región sanitaria XI</option>
 					<option>Región Sanitaria VI</option>
@@ -219,9 +221,14 @@
 				</select>
 			</div>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-4">
 			<label for="auxilio">Auxilio</label>
 			<select class="form-control" name="auxilio" id="auxilio">
+				{% if paciente.auxilio %}
+				<option selected hidden>{{ paciente.auxilio }}</option>
+				{% else %}
+				<option disabled selected>Selecciona un opción</option>
+				{% endif %}
 				<option>Sala</option>
 				<option>Guardia clínica</option>
 			</select>
