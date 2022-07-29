@@ -21,6 +21,7 @@ class Paciente(models.Model):
     auxilio = models.CharField(max_length=100, blank=True)
     profesionales = models.TextField()
     visitas = models.BooleanField(default=False)
+    intervencion = models.TextField(blank=True)
 
 
 class Visita(models.Model):

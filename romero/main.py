@@ -8,8 +8,10 @@ from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
 
+
 def start_django():
-    django_server = Popen(['python', 'manage.py', 'runserver', '--insecure'], shell=True)
+    django_server = Popen(
+        ['python', 'manage.py', 'runserver', '--insecure'], shell=True)
     return django_server
 
 
@@ -24,11 +26,10 @@ def generate_browser():
 
 
 if __name__ == '__main__':
-
     # Si no existe la base de datos, hago la migración.
     if not exists('db.sqlite3'):
         call(['python', 'manage.py', 'migrate'])
-    
+
     django_server = start_django()  # Start django server and get the process id
     generate_browser()
     try:
