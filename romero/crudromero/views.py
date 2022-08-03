@@ -144,22 +144,18 @@ def estadisticas(request):
     """ Creación y vista de las estadísticas de datos. Si la base de datos
     está vacía, muestra una ventana indicándolo. 
     """
-    manager = Manager()
-    total_dict = manager.dict()
 
-    p1 = Process(target=data_visualization, args=[total_dict])
-    p1.start()
-    p1.join()
-
+    total = data_visualization()
     context = {
-        'total': total_dict['total'],
+        'total': total,
     }
 
     # Si la base de datos se encontraba vacía, muestro una página que indique esto.
-    if total_dict['total']:
+    if total:
         return render(request, 'crudromero/estadisticas.html', context)
     else:
         return render(request, 'crudromero/no_data.html', context)
+
 
 @api_view(['GET'])
 def get_data(request):
@@ -182,7 +178,7 @@ def eliminar(request, id):
         paciente = Paciente.objects.get(id=id)
         paciente.delete()
 
-        return Response(status=status.HTTP_202_ACCEPTED)
+        return Response(status=status.HTTP_200_OK)
 
     return Response(status=status.HTTP_400_BAD_REQUEST)
 

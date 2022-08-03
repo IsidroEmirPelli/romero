@@ -1,10 +1,11 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.style as mplstyle
 from sqlite3 import connect
 
 
-def data_visualization(total_dict):
+def data_visualization():
     """
     Esta funcion genera todas las imagenes de los graficos.
     """
@@ -26,10 +27,10 @@ def data_visualization(total_dict):
         torta_pacientes_por_derivacion(df)
         torta_por_region_sanitaria(df)
 
-        total_dict['total'] = total
-
+        return total
     else:
-        total_dict['total'] = None
+        return None
+
 
 def get_all_internaciones(df):
     """Esta funcion devuelve el total de pacientes con internacion voluntaria, involuntaria y No."""
@@ -46,7 +47,6 @@ def torta_internados(involuntario, voluntario):
     genera una torta con el total de pacientes internados."""
     labels = 'Involuntaria', 'Voluntaria'
     sizes = [involuntario, voluntario]
-
     _, ax1 = plt.subplots()
     ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
             shadow=True, startangle=90)
@@ -61,7 +61,6 @@ def torta_pacientes_total_internados(total, total_internados):
     """Esta funcion recibe el total de pacientes y el total de pacientes internados y genera un grafico de torta."""
     labels = 'Total pacientes', 'Total internados'
     sizes = [total, total_internados]
-
     _, ax1 = plt.subplots()
     ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
             shadow=True, startangle=90)
@@ -80,7 +79,6 @@ def torta_pacientes_por_derivacion(df):
     xi = data.get('Región sanitaria XI') or 0
     vi = data.get('Region Sanitaria VI') or 0
     otras = data.get('Otras') or 0
-
     labels = 'Consultorios externos\ndel hospital', 'Región sanitaria XI', 'Region Sanitaria VI', 'Otras'
     sizes = [ext, xi, vi, otras]
     explode = (0.1, 0, 0, 0)
@@ -100,7 +98,6 @@ def torta_por_region_sanitaria(df):
     data = df['region_sanitaria'].value_counts()
     labels = list(data.keys())
     sizes = data
-
     _, ax1 = plt.subplots()
     ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
             shadow=True, startangle=90)

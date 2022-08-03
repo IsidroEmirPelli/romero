@@ -226,7 +226,9 @@
 		>Modificar</a
 	>
 	<button class="btn btn-danger" onclick="delete_elem('{{ paciente.id }}')">
-		Eliminar
+		<a class="text-decoration-none text-white" href="{% url 'inicio' %}"
+			>Eliminar</a
+		>
 	</button>
 </div>
 {% load static %}

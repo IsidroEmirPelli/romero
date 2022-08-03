@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Paciente',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('fecha', models.CharField(max_length=10)),
                 ('hora', models.CharField(max_length=5)),
                 ('apellido', models.CharField(blank=True, max_length=50)),
@@ -29,7 +30,8 @@ class Migration(migrations.Migration):
                 ('region_sanitaria', models.CharField(blank=True, max_length=100)),
                 ('motivo_consulta', models.CharField(blank=True, max_length=50)),
                 ('evaluacion', models.CharField(blank=True, max_length=300)),
-                ('tratamiento_psicofarm', models.CharField(blank=True, max_length=300)),
+                ('tratamiento_psicofarm', models.CharField(
+                    blank=True, max_length=300)),
                 ('internacion', models.CharField(blank=True, max_length=12)),
                 ('derivacion', models.CharField(blank=True, max_length=34)),
                 ('auxilio', models.CharField(blank=True, max_length=100)),
@@ -41,10 +43,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Visita',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('fecha', models.CharField(max_length=10)),
                 ('hora', models.CharField(max_length=5)),
-                ('paciente_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='crudromero.paciente')),
+                ('paciente_id', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='crudromero.paciente')),
             ],
         ),
     ]
