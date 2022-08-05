@@ -27,5 +27,8 @@ class Paciente(models.Model):
 class Visita(models.Model):
     fecha = models.CharField(max_length=10)
     hora = models.CharField(max_length=5)
+    evaluacion = models.CharField(max_length=300)
+    intervencion = models.TextField(blank=True)
+    motivo_consulta = models.CharField(max_length=50, blank=True)
+    tratamiento_psicofarm = models.CharField(max_length=300, blank=True)
     paciente_id = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-    evaluacion = models.CharField(max_length=300, blank=True)

@@ -23,7 +23,7 @@ def data_visualization():
         torta_por_barrio(df)
         torta_internados(involuntario, voluntario)
         get_days_data(df, df_visitas)
-        torta_pacientes_total_internados(total, involuntario + voluntario)
+        torta_pacientes_total_internados(no, involuntario + voluntario)
         torta_pacientes_por_derivacion(df)
         torta_por_region_sanitaria(df)
 

@@ -7,6 +7,7 @@ from PyQt5.Qt import *
 from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
+from time import sleep
 
 
 def start_django():
@@ -24,14 +25,9 @@ def generate_browser():
     web = QWebEngineView()
     web.load(QUrl("http://127.0.0.1:8000"))
     web.page().profile().clearHttpCache() #Clear cache to avoid problems
+    web.page().profile().clientCertificateStore()
     web.showMaximized()
     app.exec_()  # This is the main loop of the application.
-
-def await_server(django_server):
-    while True:
-        output = django_server.stdout.readline()
-        if str(output).__contains__("CTRL-BREAK"):
-            break
 
 if __name__ == '__main__':
     # Si no existe la base de datos, hago la migración.
@@ -40,7 +36,7 @@ if __name__ == '__main__':
 
     django_server = start_django()  # Start django server and get the process id
     
-    await_server(django_server)    
+    sleep(2)   
     generate_browser()
     try:
         kill(django_server.pid, CTRL_BREAK_EVENT)

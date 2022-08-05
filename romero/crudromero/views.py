@@ -1,6 +1,7 @@
 from multiprocessing import Process, Manager
+from this import d
 from django.shortcuts import render, redirect
-from .forms import PacienteForm
+from .forms import PacienteForm, VisitaForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Paciente, Visita
@@ -41,11 +42,11 @@ def vista(request, id):
     y si el paciente realizó más de una visita, también se buscan las fechas de estas.
     """
     paciente = Paciente.objects.get(id=id)
+    print(paciente.visitas)
     visitas = Visita.objects.filter(
         paciente_id=paciente) if paciente.visitas else None  # Si realizó más de una visita, accedo a la tabla 'Visita'.
-
     context = {
-        # Datos del paciente (contiene la primer visita).
+        # Datos del paciente (contiene la primer visita).s
         'paciente': paciente,
         # Todas sus visitas (menos la primera) con fecha y hora.
         'visitas': visitas,
@@ -125,13 +126,13 @@ def modificar(request, id):
     con la nueva información modificada.
     """
     paciente = Paciente.objects.get(id=id)
+    data = request.POST.dict()
+    data.update({'visitas': paciente.visitas})
     if request.method == 'POST':
-        form = PacienteForm(request.POST, instance=paciente)
+        form = PacienteForm(data, instance=paciente)
         if form.is_valid():
             form.save()
             return redirect('inicio')
-        else:
-            print(form.errors)
 
     # El valor del botón de la ventana tendrá el texto 'Modificar' (ya que se comparte
     # el template con la función de 'Registro').
@@ -151,7 +152,7 @@ def estadisticas(request):
     }
 
     # Si la base de datos se encontraba vacía, muestro una página que indique esto.
-    if total:
+    if total > 1:
         return render(request, 'crudromero/estadisticas.html', context)
     else:
         return render(request, 'crudromero/no_data.html', context)
@@ -167,12 +168,16 @@ def nueva_visita(request, id):
         if not paciente.visitas:
             paciente.visitas = True
             paciente.save()
-
+    
+        data = request.POST.dict()
         now = datetime.now()  # Obtengo la fecha y hora actual.
+        data.update({'paciente_id': paciente})
+        data.update({'fecha': now.date()})
+        data.update({'hora': now.strftime("%H:%M")})
+        form = VisitaForm(data)
         
-        visita_act = Visita.objects.create(
-            fecha=now.date(), hora=now.strftime("%H:%M"), paciente_id=paciente, evaluacion=request.POST['evaluacion'])
-        visita_act.save()
+        if form.is_valid():
+            form.save()
     return redirect('inicio')
 
 @api_view(['GET'])

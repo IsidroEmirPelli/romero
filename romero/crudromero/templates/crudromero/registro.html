@@ -285,8 +285,32 @@
 			>
 				{% csrf_token %}
 				<div class="form-group">
+					<label for="tratamiento_psicofarm">Tratamiento psicofarmacológico</label>
+					<textarea
+						id = "tratamiento_psicofarm_form"
+						class="form-control"
+						name="tratamiento_psicofarm"
+						rows="2"
+						required
+					></textarea>
+					<label for="intervencion">Intervención</label>
+					<input
+						id ="intervencion_form"
+						type="text"
+						class="form-control col-md-3"
+						name="intervencion"
+						required
+					/>
+					<label for="motivo_consulta">Motivo de consulta</label>
+					<input
+						id="motivo_consulta_form"
+						type="text"
+						class="form-control col-md-3"
+						name="motivo_consulta"
+						required
+					/>
 					<label for="evaluacion">Evaluación al día de la fecha</label>
-					<textarea class="form-control" name="evaluacion" id="evaluacion" rows="3" required></textarea>
+					<textarea class="form-control" name="evaluacion" rows="3" required></textarea>
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">Añadir</button>
@@ -297,5 +321,7 @@
 		</div>
 	</div>
 </div>
+{% else %}
+</form>
 {% endif %}
 {% endblock %}
