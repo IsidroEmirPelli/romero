@@ -135,7 +135,7 @@ def modificar(request, id):
 
     # El valor del botón de la ventana tendrá el texto 'Modificar' (ya que se comparte
     # el template con la función de 'Registro').
-    context = {'paciente': paciente, 'button': 'Modificar'}
+    context = {'paciente': paciente, 'button': 'Guardar cambios'}
 
     return render(request, 'crudromero/registro.html', context)
 
@@ -156,6 +156,24 @@ def estadisticas(request):
     else:
         return render(request, 'crudromero/no_data.html', context)
 
+def nueva_visita(request, id):
+    """ Añado una nueva visita a la tabla 'Visita', con la fecha y hora actual. Relaciono
+    la nueva fila de la tabla con el paciente al que pertenecen estos datos.
+    """
+    if request.method == 'POST':
+        paciente = Paciente.objects.get(id=id)
+        # Si el paciente no realizó más de 1 visita, cambio el valor de la variable que
+        # me indica esto.
+        if not paciente.visitas:
+            paciente.visitas = True
+            paciente.save()
+
+        now = datetime.now()  # Obtengo la fecha y hora actual.
+        
+        visita_act = Visita.objects.create(
+            fecha=now.date(), hora=now.strftime("%H:%M"), paciente_id=paciente, evaluacion=request.POST['evaluacion'])
+        visita_act.save()
+    return redirect('inicio')
 
 @api_view(['GET'])
 def get_data(request):
@@ -180,25 +198,4 @@ def eliminar(request, id):
 
         return Response(status=status.HTTP_200_OK)
 
-    return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['POST'])
-def nueva_visita(request, id):
-    """ Añado una nueva visita a la tabla 'Visita', con la fecha y hora actual. Relaciono
-    la nueva fila de la tabla con el paciente al que pertenecen estos datos.
-    """
-    if request.method == 'POST':
-        paciente = Paciente.objects.get(id=id)
-        # Si el paciente no realizó más de 1 visita, cambio el valor de la variable que
-        # me indica esto.
-        if not paciente.visitas:
-            paciente.visitas = True
-            paciente.save()
-
-        now = datetime.now()  # Obtengo la fecha y hora actual.
-        visita_act = Visita.objects.create(
-            fecha=now.date(), hora=now.strftime("%H:%M"), paciente_id=paciente)
-        visita_act.save()
-        return Response(status=status.HTTP_202_ACCEPTED)
     return Response(status=status.HTTP_400_BAD_REQUEST)

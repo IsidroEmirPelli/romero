@@ -260,18 +260,42 @@
 			>
 		</div>
 	</div>
-	<button type="submit" class="btn btn-primary w-25 mx-auto mt-3">
+	<button type="submit" class="btn btn-success w-25 mx-auto mt-3">
 		{{ button }}
 	</button>
-	{% load static %} {% if button == 'Modificar' %}
-	<button
-		type="button"
-		class="btn btn-primary w-25 mx-auto mt-3"
-		onclick="nueva_visita('{{paciente.id}}')"
-	>
+{% load static %} {% if button == 'Guardar cambios' %}
+	<button type="button" class="btn btn-primary w-25 mx-auto mt-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 		Añadir visita
 	</button>
-	<script src="{% static 'js/nueva_visita.js' %}"></script>
-	{% endif %}
 </form>
+<!-- Modal -->
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="staticBackdropLabel">Añadir visita</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<form
+			action="{% url 'visita' paciente.id %}"
+			method="POST"
+			style="background-color: white"
+			>
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="evaluacion">Evaluación al día de la fecha</label>
+					<textarea class="form-control" name="evaluacion" id="evaluacion" rows="3" required></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Añadir</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				</div>
+			</form>
+		</div>
+		</div>
+	</div>
+</div>
+{% endif %}
 {% endblock %}

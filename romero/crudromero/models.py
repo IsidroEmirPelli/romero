@@ -28,3 +28,4 @@ class Visita(models.Model):
     fecha = models.CharField(max_length=10)
     hora = models.CharField(max_length=5)
     paciente_id = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    evaluacion = models.CharField(max_length=300, blank=True)

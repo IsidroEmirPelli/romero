@@ -23,6 +23,7 @@ def generate_browser():
     app.setWindowIcon(QIcon('icono.ico'))
     web = QWebEngineView()
     web.load(QUrl("http://127.0.0.1:8000"))
+    web.page().profile().clearHttpCache() #Clear cache to avoid problems
     web.showMaximized()
     app.exec_()  # This is the main loop of the application.
 

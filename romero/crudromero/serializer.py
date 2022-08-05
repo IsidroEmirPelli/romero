@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Paciente
+from .models import Paciente, Visita
 
 
 class PacienteSerializer(serializers.ModelSerializer):
