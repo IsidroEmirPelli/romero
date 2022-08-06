@@ -31,6 +31,13 @@ def data_visualization():
     else:
         return None
 
+def get_percentages(sizes, labels):
+    """ Esta función devuelve una lista con las labels de texto y porcentaje para los pie charts """
+    sizes_total = sum(sizes)
+    data_graph = [f'{e}  - {str(round(l*100.0/sizes_total, 2))}%' for l, e in zip(sizes, labels)]
+
+    return data_graph
+
 
 def get_all_internaciones(df):
     """Esta funcion devuelve el total de pacientes con internacion voluntaria, involuntaria y No."""
@@ -48,9 +55,11 @@ def torta_internados(involuntario, voluntario):
     labels = 'Involuntaria', 'Voluntaria'
     sizes = [involuntario, voluntario]
     _, ax1 = plt.subplots()
-    ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
+    ax1.pie(sizes, shadow=True, startangle=90)
     ax1.axis('equal')
+
+    data_graph = get_percentages(sizes, labels)
+    ax1.legend(labels=data_graph, loc='lower left', prop={'size': 13})
 
     plt.savefig(os.path.join(os.getcwd(), 'crudromero',
                 'static', 'media', 'internados.png'))
@@ -62,10 +71,12 @@ def torta_pacientes_total_internados(total, total_internados):
     labels = 'Total pacientes', 'Total internados'
     sizes = [total, total_internados]
     _, ax1 = plt.subplots()
-    ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
+    ax1.pie(sizes, shadow=True, startangle=90)
 
     ax1.axis('equal')
+
+    data_graph = get_percentages(sizes, labels)
+    ax1.legend(labels=data_graph, loc='lower left', prop={'size': 13})
 
     plt.savefig(os.path.join(os.getcwd(), 'crudromero',
                 'static', 'media',  'total_pacientes.png'))
@@ -83,10 +94,12 @@ def torta_pacientes_por_derivacion(df):
     sizes = [ext, xi, vi, otras]
     explode = (0.1, 0, 0, 0)
     _, ax1, = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
+    ax1.pie(sizes, explode=explode, shadow=True, startangle=90)
 
     ax1.axis('equal')
+
+    data_graph = get_percentages(sizes, labels)
+    ax1.legend(labels=data_graph, loc='best', prop={'size': 13})
 
     plt.savefig(os.path.join(os.getcwd(), 'crudromero',
                 'static', 'media', 'pacientes_derivacion.png'))
@@ -99,9 +112,11 @@ def torta_por_region_sanitaria(df):
     labels = list(data.keys())
     sizes = data
     _, ax1 = plt.subplots()
-    ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
+    ax1.pie(sizes, shadow=True, startangle=90)
     ax1.axis('equal')
+
+    data_graph = get_percentages(sizes, labels)
+    ax1.legend(labels=data_graph, loc='lower left', prop={'size': 13})
 
     plt.savefig(os.path.join(os.getcwd(), 'crudromero',
                 'static', 'media', 'region_sanitaria.png'))
@@ -115,10 +130,13 @@ def torta_por_barrio(df):
     sizes = data
 
     _, ax1 = plt.subplots()
-    ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
+    ax1.pie(sizes, shadow=True, startangle=90)
 
     ax1.axis('equal')
+
+    data_graph = get_percentages(sizes, labels)
+    ax1.legend(labels=data_graph, loc='upper left', bbox_to_anchor=(-0.17, 1.13))
+
     plt.savefig(os.path.join(os.getcwd(), 'crudromero',
                 'static', 'media', 'barrios.png'))
     plt.clf()

@@ -152,7 +152,7 @@ def estadisticas(request):
     }
 
     # Si la base de datos se encontraba vacía, muestro una página que indique esto.
-    if total > 1:
+    if total and total > 1:
         return render(request, 'crudromero/estadisticas.html', context)
     else:
         return render(request, 'crudromero/no_data.html', context)
