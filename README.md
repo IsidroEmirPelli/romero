@@ -20,4 +20,4 @@
 
 # Página con estadísticas
 
-![romero_4](https://user-images.githubusercontent.com/81332665/181675896-67d939db-c1ee-4766-ad68-b679d7ba4fe1.jpeg)
+![unknown](https://user-images.githubusercontent.com/81332665/183548144-82c821b0-b7cb-415d-b875-dcae9d355ec0.png)
