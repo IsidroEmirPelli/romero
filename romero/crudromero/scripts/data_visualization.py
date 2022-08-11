@@ -14,8 +14,8 @@ def data_visualization():
     df_visitas = pd.read_sql_query('SELECT * FROM crudromero_visita', conn)
     conn.close()
 
-    # Checkeo si la base de datos no está vacía.
-    if len(df != 0):
+    # Checkeo si la base de datos contiene mas de 1 paciente.
+    if len(df) > 1:
 
         involuntario, voluntario, no = get_all_internaciones(df)
 
@@ -31,10 +31,12 @@ def data_visualization():
     else:
         return None
 
+
 def get_percentages(sizes, labels):
     """ Esta función devuelve una lista con las labels de texto y porcentaje para los pie charts """
     sizes_total = sum(sizes)
-    data_graph = [f'{e}  - {str(round(l*100.0/sizes_total, 2))}%' for l, e in zip(sizes, labels)]
+    data_graph = [
+        f'{e}  - {str(round(l*100.0/sizes_total, 2))}%' for l, e in zip(sizes, labels)]
 
     return data_graph
 
@@ -135,7 +137,8 @@ def torta_por_barrio(df):
     ax1.axis('equal')
 
     data_graph = get_percentages(sizes, labels)
-    ax1.legend(labels=data_graph, loc='upper left', bbox_to_anchor=(-0.17, 1.13))
+    ax1.legend(labels=data_graph, loc='upper left',
+               bbox_to_anchor=(-0.17, 1.13))
 
     plt.savefig(os.path.join(os.getcwd(), 'crudromero',
                 'static', 'media', 'barrios.png'))

@@ -1,5 +1,4 @@
 from multiprocessing import Process, Manager
-from this import d
 from django.shortcuts import render, redirect
 from .forms import PacienteForm, VisitaForm
 from rest_framework.decorators import api_view
@@ -152,10 +151,11 @@ def estadisticas(request):
     }
 
     # Si la base de datos se encontraba vacía, muestro una página que indique esto.
-    if total and total > 1:
+    if not total:
         return render(request, 'crudromero/estadisticas.html', context)
     else:
         return render(request, 'crudromero/no_data.html', context)
+
 
 def nueva_visita(request, id):
     """ Añado una nueva visita a la tabla 'Visita', con la fecha y hora actual. Relaciono
@@ -168,17 +168,18 @@ def nueva_visita(request, id):
         if not paciente.visitas:
             paciente.visitas = True
             paciente.save()
-    
+
         data = request.POST.dict()
         now = datetime.now()  # Obtengo la fecha y hora actual.
         data.update({'paciente_id': paciente})
         data.update({'fecha': now.date()})
         data.update({'hora': now.strftime("%H:%M")})
         form = VisitaForm(data)
-        
+
         if form.is_valid():
             form.save()
     return redirect('inicio')
+
 
 @api_view(['GET'])
 def get_data(request):
