@@ -19,9 +19,12 @@ def data_visualization():
 
         involuntario, voluntario, no = get_all_internaciones(df)
 
-        total = involuntario + voluntario + no
+        total = {'total': involuntario + voluntario + no}
         torta_por_barrio(df)
-        torta_internados(involuntario, voluntario)
+        if involuntario + voluntario != 0:
+            torta_internados(involuntario, voluntario)
+        else:
+            total['error_torta'] = 'No hay pacientes internados'
         get_days_data(df, df_visitas)
         torta_pacientes_total_internados(no, involuntario + voluntario)
         torta_pacientes_por_derivacion(df)
@@ -43,10 +46,10 @@ def get_percentages(sizes, labels):
 
 def get_all_internaciones(df):
     """Esta funcion devuelve el total de pacientes con internacion voluntaria, involuntaria y No."""
-    data = df['internacion'].value_counts()
-    involuntario = dict(data).get('Involuntaria') or 0
-    voluntario = dict(data).get('Voluntaria') or 0
-    no = dict(data).get('No') or 0
+    data = dict(df['internacion'].value_counts())
+    involuntario = data.get('Involuntaria', 0)
+    voluntario = data.get('Voluntaria', 0)
+    no = data.get('No', 0)
 
     return involuntario, voluntario, no
 

@@ -11,17 +11,24 @@
 
 		<div class="row m-2">
 			<div class="col-md-6">
-				<div class="card text-center" style="background-color: #ffffff">
+				<div
+					class="card text-center h-100 my-auto"
+					style="background-color: #ffffff"
+				>
 					<h5 class="m-2"><u>Tipo de internación</u></h5>
+					{% if error_torta %}
+					<h5 class="my-auto">{{error_torta}}</h5>
+					{% else %}
 					<img
 						src="{% static 'media/internados.png' %}"
 						class="mx-auto m-2"
 						width="80%"
 					/>
+					{% endif %}
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="card text-center" style="background-color: #ffffff">
+				<div class="card text-center h-100" style="background-color: #ffffff">
 					<h5 class="m-2"><u>Porcentaje de pacientes internados</u></h5>
 					<img
 						src="{% static 'media/total_pacientes.png' %}"

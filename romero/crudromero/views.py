@@ -146,15 +146,12 @@ def estadisticas(request):
     """
 
     total = data_visualization()
-    context = {
-        'total': total,
-    }
 
     # Si la base de datos se encontraba vacía, muestro una página que indique esto.
-    if not total:
-        return render(request, 'crudromero/estadisticas.html', context)
+    if total:
+        return render(request, 'crudromero/estadisticas.html', total)
     else:
-        return render(request, 'crudromero/no_data.html', context)
+        return render(request, 'crudromero/no_data.html')
 
 
 def nueva_visita(request, id):

@@ -211,8 +211,16 @@
 							{% for visita in visitas %}
 							<tr>
 								<td>
-									<a class="text-decoration-none" onclick="show_evaluation('{{visita.evaluacion}}', '{{visita.fecha}}', '{{visita.hora}}', '{{visita.intervencion}}', '{{visita.motivo_consulta}}', '{{visita.tratamiento_psicofarm}}')" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">{{visita.fecha}}</a></td>
-									<td>{{visita.hora}}</td>
+									<a
+										class="text-decoration-none"
+										onclick="show_evaluation('{{visita.evaluacion}}', '{{visita.fecha}}', '{{visita.hora}}', '{{visita.intervencion}}', '{{visita.motivo_consulta}}', '{{visita.tratamiento_psicofarm}}')"
+										data-bs-toggle="modal"
+										data-bs-target="#exampleModal"
+										href="#"
+										>{{visita.fecha}}</a
+									>
+								</td>
+								<td>{{visita.hora}}</td>
 							</tr>
 							{% endfor %}
 						</tbody>
@@ -226,47 +234,78 @@
 	<a class="btn btn-primary" href="{% url 'modificar' paciente.id %}"
 		>Modificar</a
 	>
-	<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+	<button
+		type="button"
+		class="btn btn-danger"
+		data-bs-toggle="modal"
+		data-bs-target="#staticBackdrop"
+	>
 		Eliminar
 	</button>
 </div>
 
 <!-- Modal (Delete) -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div
+	class="modal fade"
+	id="staticBackdrop"
+	data-bs-backdrop="static"
+	data-bs-keyboard="false"
+	tabindex="-1"
+	aria-labelledby="staticBackdropLabel"
+	aria-hidden="true"
+>
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
-		<div class="modal-header">
-			<h5 class="modal-title" id="staticBackdropLabel">Eliminar paciente</h5>
-			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
-		<div class="modal-body">
-			<p>¿Está seguro que quieres eliminar a este paciente?</p>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" onclick="delete_elem('{{ paciente.id }}')">
-				<a class="text-decoration-none text-white" href="{% url 'inicio' %}">Eliminar</a>
-			</button>
-			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-		</div>
+			<div class="modal-header">
+				<h5 class="modal-title" id="staticBackdropLabel">Eliminar paciente</h5>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+				></button>
+			</div>
+			<div class="modal-body">
+				<p>¿Está seguro que quieres eliminar a este paciente?</p>
+			</div>
+			<div class="modal-footer">
+				<button
+					type="button"
+					class="btn btn-primary"
+					onclick="delete_elem('{{ paciente.id }}')"
+				>
+					<a class="text-decoration-none text-white" href="{% url 'inicio' %}"
+						>Eliminar</a
+					>
+				</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+					Cerrar
+				</button>
+			</div>
 		</div>
 	</div>
 </div>
 
 <!-- Modal (Show evaluations) -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+	class="modal fade"
+	id="exampleModal"
+	tabindex="-1"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+>
 	<div class="modal-dialog modal-dialog-centered">
-	  <div class="modal-content p-2">
-		<div class="m1odal-header">
-		  <h5 class="modal-title" id="exampleModalLabel"></h5>
-		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		<div class="modal-content p-2">
+			<div class="m1odal-header">
+				<h5 class="modal-title" id="exampleModalLabel"></h5>
+			</div>
+			<div class="modal-body" id="modal-body-show"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+					Cerrar
+				</button>
+			</div>
 		</div>
-		<div class="modal-body" id="modal-body-show">
-
-		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-		</div>
-	  </div>
 	</div>
 </div>
 {% load static %}
