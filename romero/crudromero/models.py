@@ -5,7 +5,7 @@ class Paciente(models.Model):
     fecha = models.CharField(max_length=10)
     hora = models.CharField(max_length=5)
     apellido = models.CharField(max_length=50, blank=True)
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50, blank=True)
     edad = models.IntegerField(null=True, blank=True)
     dni = models.CharField(max_length=8)
     sexo = models.CharField(max_length=20, blank=True)
@@ -22,6 +22,8 @@ class Paciente(models.Model):
     profesionales = models.TextField()
     visitas = models.BooleanField(default=False)
     intervencion = models.TextField(blank=True)
+    obra_social = models.TextField()
+    enfermedad_mental = models.TextField()
 
 
 class Visita(models.Model):

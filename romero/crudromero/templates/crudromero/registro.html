@@ -31,6 +31,7 @@
 				name="apellido"
 				value="{{ paciente.apellido }}"
 				id="apellido"
+				required
 			/>
 		</div>
 		<div class="col-md-2">
@@ -41,7 +42,6 @@
 				name="nombre"
 				id="nombre"
 				value="{{ paciente.nombre }}"
-				required
 			/>
 		</div>
 		<div class="row col-md-4 m-0 ps-0 pl-2">
@@ -64,7 +64,6 @@
 					id="hora"
 					value="{{ paciente.hora }}"
 					required
-					pattern="[0-9]{2}:[0-9]{2}"
 				/>
 			</div>
 		</div>
@@ -87,11 +86,7 @@
 			<div class="form-group">
 				<label for="sexo">Sexo</label>
 				<select class="form-control" name="sexo" id="sexo">
-					{% if paciente.sexo %}
 					<option selected hidden>{{ paciente.sexo }}</option>
-					{% else %}
-					<option disabled selected>Selecciona un opción</option>
-					{% endif %}
 					<option>Hombre</option>
 					<option>Mujer</option>
 					<option>Otro</option>
@@ -237,13 +232,28 @@
 		<div class="col-md-4">
 			<label for="auxilio">Auxilio</label>
 			<select class="form-control" name="auxilio" id="auxilio">
-				{% if paciente.auxilio %}
 				<option selected hidden>{{ paciente.auxilio }}</option>
-				{% else %}
-				<option disabled selected>Selecciona un opción</option>
-				{% endif %}
 				<option>Sala</option>
 				<option>Guardia clínica</option>
+			</select>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<label for="enfermedad_mental">Diagnóstico</label>
+			<select class="form-control" name="enfermedad_mental" id="enfermedad_mental" required>
+				<option selected hidden>{{ paciente.enfermedad_mental }}</option>
+				{% for i in rango %}
+				<option>{{i}}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="col-md-6">
+			<label for="obra_social">Obra social</label>
+			<select class="form-control" name="obra_social" id="obra_social" required>
+				<option selected hidden>{{ paciente.obra_social }}</option>
+				<option>Si</option>
+				<option>No</option>
 			</select>
 		</div>
 	</div>

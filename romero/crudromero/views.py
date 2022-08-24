@@ -31,7 +31,8 @@ def registro(request):
 
     # 'Registro' y 'Modificar' utilizan la misma plantilla.
     # Ya que me encuentro en 'Registro', el texto del botón será 'Agregar'.
-    context = {'button': 'Agregar'}
+    context = {'button': 'Agregar', 'rango': [
+        "F-%.2d" % i for i in range(101)]}
 
     return render(request, 'crudromero/registro.html', context)
 
@@ -75,17 +76,17 @@ def get_query_result(text, all=False, fin=0, anchor=None, grow_value=100):
             pacientes = Paciente.objects.filter(dni__startswith=text[0])[
                 start_value:limit+1]
         else:
-            pacientes = Paciente.objects.filter(nombre__startswith=text[0])[
+            pacientes = Paciente.objects.filter(apellido__startswith=text[0])[
                 start_value:limit+1]
     else:
         # Si se realizó la búsqueda con 2 datos, verifico cuál es el `DNI` y cuál el `Nombre`.
         if text[0].isdigit():
             # Obtengo 1 dato más que el límite para saber si quedaron más pacientes.
             pacientes = Paciente.objects.filter(
-                dni__startswith=text[0], nombre__startswith=text[1])[start_value:limit+1]
+                dni__startswith=text[0], apellido__startswith=text[1])[start_value:limit+1]
         else:
             pacientes = Paciente.objects.filter(
-                dni__startswith=text[1], nombre__startswith=text[0])[start_value:limit+1]
+                dni__startswith=text[1], apellido__startswith=text[0])[start_value:limit+1]
 
     # Verficio si quedaron más pacientes.
     # Esto es para saber cuándo dejar de mostrar el botón "Página siguiente".
@@ -135,7 +136,8 @@ def modificar(request, id):
 
     # El valor del botón de la ventana tendrá el texto 'Modificar' (ya que se comparte
     # el template con la función de 'Registro').
-    context = {'paciente': paciente, 'button': 'Guardar cambios'}
+    context = {'paciente': paciente, 'button': 'Guardar cambios', 'rango': [
+        "F-%.2d" % i for i in range(101)]}
 
     return render(request, 'crudromero/registro.html', context)
 
