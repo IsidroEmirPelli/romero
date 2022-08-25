@@ -9,6 +9,9 @@ from .scripts.data_visualization import *
 from rest_framework import status
 import pandas as pd
 from sqlite3 import connect
+from logging import getLogger
+
+logger = getLogger('django')
 
 
 def inicio(request):
@@ -28,7 +31,7 @@ def registro(request):
             form.save()  # Guardo en la base de datos.
             return redirect('inicio')
         else:
-            print(form.errors)
+            logger.info(f"ERROR en el formulario: {form.errors}")
 
     # 'Registro' y 'Modificar' utilizan la misma plantilla.
     # Ya que me encuentro en 'Registro', el texto del botón será 'Agregar'.
@@ -43,7 +46,6 @@ def vista(request, id):
     y si el paciente realizó más de una visita, también se buscan las fechas de estas.
     """
     paciente = Paciente.objects.get(id=id)
-    print(paciente.visitas)
     visitas = Visita.objects.filter(
         paciente_id=paciente) if paciente.visitas else None  # Si realizó más de una visita, accedo a la tabla 'Visita'.
     context = {
@@ -134,7 +136,8 @@ def modificar(request, id):
         if form.is_valid():
             form.save()
             return redirect('inicio')
-
+        else:
+            logger.info(f'ERROR al modificar el paciente {paciente.id}')
     # El valor del botón de la ventana tendrá el texto 'Modificar' (ya que se comparte
     # el template con la función de 'Registro').
     context = {'paciente': paciente, 'button': 'Guardar cambios', 'rango': [
@@ -173,6 +176,9 @@ def estadisticas(request):
             df, 'region_sanitaria'))
         context['torta_por_barrio'] = json.dumps(get_data_torta(df, 'barrio'))
         context['get_days_data'] = json.dumps(get_days_data(df, df_visitas))
+        context['enfermedad_mental'] = json.dumps(
+            get_data_torta(df, 'enfermedad_mental'))
+        context['obra_social'] = json.dumps(get_data_torta(df, 'obra_social'))
 
         return render(request, 'crudromero/estadisticas.html', context)
 
@@ -198,6 +204,9 @@ def nueva_visita(request, id):
 
         if form.is_valid():
             form.save()
+        else:
+            logger.info(
+                f'ERROR al crear la visita para el paciente {paciente.id}')
     return redirect('inicio')
 
 

@@ -27,7 +27,6 @@
 		const input = document.getElementById('text');
 		input.addEventListener('keyup', (event) => {
 			if (event.key == 'Enter') {
-				console.log('entre');
 				const lista = input.value.split(' ');
 				let contlista = document.getElementById('lista');
 				if ((lista.length > 0) & (lista.length <= 2) & (lista[0] != '')) {

@@ -11,7 +11,7 @@ function randomsColors (size){
     const colors = [];
     while (colors.length != size) {
         let color = '#'+Math.floor(Math.random()*16777215).toString(16);
-        if (!colors.includes(color) && !color.startsWith('#0000') && !color.startsWith('#ff00') && !color.startsWith('#00ff') && !color.startsWith('#ffff')) {
+        if (!colors.includes(color)) {
             colors.push(color); 
         }
     }
@@ -53,6 +53,13 @@ function makeCharts2(json, id) {
                 backgroundColor: colors,
                 borderColor: 'black',
             }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            }
         }
     });
 }

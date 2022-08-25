@@ -6,7 +6,11 @@
 >
 	{% csrf_token %}
 	<div class="text-center bg-secondary text-white rounded m-4 mt-2">
+		{% if button != 'Guardar cambios' %}
 		<h2 class="h2">Registro de pacientes</h2>
+		{% else %}
+		<h2 class="h2">Editar paciente</h2>
+		{% endif %}
 	</div>
 	<div class="row mb-3">
 		<div class="col-md-3">
