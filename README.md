@@ -12,7 +12,19 @@
 
 # Página de registro
 
-![romero_2](https://user-images.githubusercontent.com/81332665/181675649-dab29ecd-f991-4228-a1b3-8343c46ab556.jpeg)
+![image](https://user-images.githubusercontent.com/88697022/186564578-efbf4a2f-63cb-4286-89bd-ae9d8b1bb51f.png)
+
+# Página de modificiacion de pacientes
+
+![image](https://user-images.githubusercontent.com/88697022/186564968-50c9a9af-b54a-4067-8b96-2a98b4a09649.png)
+
+# Registro de visitas
+
+![image](https://user-images.githubusercontent.com/88697022/186565059-6fb74c8d-7004-49d4-ae49-1ad6693d754e.png)
+
+# Página de ver informacion del paciente
+
+![image](https://user-images.githubusercontent.com/88697022/186565207-c70ef0a4-c807-4d98-8813-e77f66717363.png)
 
 # Página de estadísticas vacía
 
@@ -20,4 +32,4 @@
 
 # Página con estadísticas
 
-![unknown](https://user-images.githubusercontent.com/81332665/183548144-82c821b0-b7cb-415d-b875-dcae9d355ec0.png)
+![image](https://user-images.githubusercontent.com/88697022/186564504-ca672c31-8289-4f12-93d9-0a63cd8fcec1.png)
