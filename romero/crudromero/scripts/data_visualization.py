@@ -1,55 +1,12 @@
-import os
 import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.style as mplstyle
-from sqlite3 import connect
-
-
-def data_visualization():
-    """
-    Esta funcion genera todas las imagenes de los graficos.
-    """
-    conn = connect('db.sqlite3')
-    df = pd.read_sql_query("SELECT * FROM crudromero_paciente", conn)
-    df_visitas = pd.read_sql_query('SELECT * FROM crudromero_visita', conn)
-    conn.close()
-
-    # Checkeo si la base de datos contiene mas de 1 paciente.
-    if len(df) > 1:
-
-        involuntario, voluntario, no = get_all_internaciones(df)
-
-        total = {'total': involuntario + voluntario + no}
-        torta_por_barrio(df)
-        if involuntario + voluntario != 0:
-            torta_internados(involuntario, voluntario)
-        else:
-            total['error_torta'] = 'No hay pacientes internados'
-        get_days_data(df, df_visitas)
-        torta_pacientes_total_internados(no, involuntario + voluntario)
-        torta_pacientes_por_derivacion(df)
-        torta_por_region_sanitaria(df)
-
-        return total
-    else:
-        return None
-
-
-def get_percentages(sizes, labels):
-    """ Esta función devuelve una lista con las labels de texto y porcentaje para los pie charts """
-    sizes_total = sum(sizes)
-    data_graph = [
-        f'{e}  - {str(round(l*100.0/sizes_total, 2))}%' for l, e in zip(sizes, labels)]
-
-    return data_graph
 
 
 def get_all_internaciones(df):
     """Esta funcion devuelve el total de pacientes con internacion voluntaria, involuntaria y No."""
     data = dict(df['internacion'].value_counts())
-    involuntario = data.get('Involuntaria', 0)
-    voluntario = data.get('Voluntaria', 0)
-    no = data.get('No', 0)
+    involuntario = int(data.get('Involuntaria', 0))
+    voluntario = int(data.get('Voluntaria', 0))
+    no = int(data.get('No', 0))
 
     return involuntario, voluntario, no
 
@@ -57,95 +14,26 @@ def get_all_internaciones(df):
 def torta_internados(involuntario, voluntario):
     """Esta funcion recibe el total de pacientes involuntarios y voluntarios y
     genera una torta con el total de pacientes internados."""
-    labels = 'Involuntaria', 'Voluntaria'
+    labels = ['Involuntaria', 'Voluntaria']
     sizes = [involuntario, voluntario]
-    _, ax1 = plt.subplots()
-    ax1.pie(sizes, shadow=True, startangle=90)
-    ax1.axis('equal')
 
-    data_graph = get_percentages(sizes, labels)
-    ax1.legend(labels=data_graph, loc='lower left', prop={'size': 13})
-
-    plt.savefig(os.path.join(os.getcwd(), 'crudromero',
-                'static', 'media', 'internados.png'))
-    plt.clf()
+    return {'data': sizes, 'labels': labels}
 
 
 def torta_pacientes_total_internados(total, total_internados):
     """Esta funcion recibe el total de pacientes y el total de pacientes internados y genera un grafico de torta."""
-    labels = 'Total pacientes', 'Total internados'
+    labels = ['Total pacientes', 'Total internados']
     sizes = [total, total_internados]
-    _, ax1 = plt.subplots()
-    ax1.pie(sizes, shadow=True, startangle=90)
 
-    ax1.axis('equal')
-
-    data_graph = get_percentages(sizes, labels)
-    ax1.legend(labels=data_graph, loc='lower left', prop={'size': 13})
-
-    plt.savefig(os.path.join(os.getcwd(), 'crudromero',
-                'static', 'media',  'total_pacientes.png'))
-    plt.clf()
+    return {'data': sizes, 'labels': labels}
 
 
-def torta_pacientes_por_derivacion(df):
-    """Esta funcion genera un grafico de torta con el total de pacientes dependiendo de su derivacion."""
-    data = df['derivacion'].value_counts()
-    ext = data.get('Consultorios externos del hospital') or 0
-    xi = data.get('Región sanitaria XI') or 0
-    vi = data.get('Region Sanitaria VI') or 0
-    otras = data.get('Otras') or 0
-    labels = 'Consultorios externos\ndel hospital', 'Región sanitaria XI', 'Region Sanitaria VI', 'Otras'
-    sizes = [ext, xi, vi, otras]
-    explode = (0.1, 0, 0, 0)
-    _, ax1, = plt.subplots()
-    ax1.pie(sizes, explode=explode, shadow=True, startangle=90)
-
-    ax1.axis('equal')
-
-    data_graph = get_percentages(sizes, labels)
-    ax1.legend(labels=data_graph, loc='best', prop={'size': 13})
-
-    plt.savefig(os.path.join(os.getcwd(), 'crudromero',
-                'static', 'media', 'pacientes_derivacion.png'))
-    plt.clf()
-
-
-def torta_por_region_sanitaria(df):
-    """Esta funcion genera un grafico de torta con el total de pacientes dependiendo de su region sanitaria."""
-    data = df['region_sanitaria'].value_counts()
+def get_data_torta(df, key):
+    data = df[key].value_counts()
     labels = list(data.keys())
-    sizes = data
-    _, ax1 = plt.subplots()
-    ax1.pie(sizes, shadow=True, startangle=90)
-    ax1.axis('equal')
+    data = data.values.tolist()
 
-    data_graph = get_percentages(sizes, labels)
-    ax1.legend(labels=data_graph, loc='lower left', prop={'size': 13})
-
-    plt.savefig(os.path.join(os.getcwd(), 'crudromero',
-                'static', 'media', 'region_sanitaria.png'))
-    plt.clf()
-
-
-def torta_por_barrio(df):
-    """Esta funcion genera un grafico de torta con el total de pacientes dependiendo de su barrio."""
-    data = df['barrio'].value_counts()
-    labels = list(data.keys())
-    sizes = data
-
-    _, ax1 = plt.subplots()
-    ax1.pie(sizes, shadow=True, startangle=90)
-
-    ax1.axis('equal')
-
-    data_graph = get_percentages(sizes, labels)
-    ax1.legend(labels=data_graph, loc='upper left',
-               bbox_to_anchor=(-0.17, 1.13))
-
-    plt.savefig(os.path.join(os.getcwd(), 'crudromero',
-                'static', 'media', 'barrios.png'))
-    plt.clf()
+    return {'data': data, 'labels': labels}
 
 
 def get_days_data(df, df_visitas):
@@ -166,9 +54,5 @@ def get_days_data(df, df_visitas):
     data = df_todo.value_counts()
     labels = [dias[k] for k in dias]
     sizes = [data[v] if v in data else 0 for k, v in dias.items()]
-    plt.bar(labels, sizes)
-    plt.ylabel('Cantidad de pacientes')
-    plt.title('Cantidad de pacientes por dia')
-    plt.savefig(os.path.join(os.getcwd(), 'crudromero',
-                'static', 'media', 'dias.png'))
-    plt.clf()
+
+    return {'data': list(map(lambda x: int(x), sizes)), 'labels': labels}

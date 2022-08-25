@@ -1,4 +1,3 @@
-from multiprocessing import Process, Manager
 from django.shortcuts import render, redirect
 from .forms import PacienteForm, VisitaForm
 from rest_framework.decorators import api_view
@@ -6,8 +5,10 @@ from rest_framework.response import Response
 from .models import Paciente, Visita
 from .serializer import PacienteSerializer
 from datetime import datetime
-from .scripts.data_visualization import data_visualization
+from .scripts.data_visualization import *
 from rest_framework import status
+import pandas as pd
+from sqlite3 import connect
 
 
 def inicio(request):
@@ -32,7 +33,7 @@ def registro(request):
     # 'Registro' y 'Modificar' utilizan la misma plantilla.
     # Ya que me encuentro en 'Registro', el texto del botón será 'Agregar'.
     context = {'button': 'Agregar', 'rango': [
-        "F-%.2d" % i for i in range(101)]}
+        "F-%.2d" % i for i in range(100)]}
 
     return render(request, 'crudromero/registro.html', context)
 
@@ -137,7 +138,7 @@ def modificar(request, id):
     # El valor del botón de la ventana tendrá el texto 'Modificar' (ya que se comparte
     # el template con la función de 'Registro').
     context = {'paciente': paciente, 'button': 'Guardar cambios', 'rango': [
-        "F-%.2d" % i for i in range(101)]}
+        "F-%.2d" % i for i in range(100)]}
 
     return render(request, 'crudromero/registro.html', context)
 
@@ -147,13 +148,33 @@ def estadisticas(request):
     está vacía, muestra una ventana indicándolo. 
     """
 
-    total = data_visualization()
+    conn = connect('db.sqlite3')
+    df = pd.read_sql_query("SELECT * FROM crudromero_paciente", conn)
+    df_visitas = pd.read_sql_query('SELECT * FROM crudromero_visita', conn)
+    conn.close()
 
     # Si la base de datos se encontraba vacía, muestro una página que indique esto.
-    if total:
-        return render(request, 'crudromero/estadisticas.html', total)
-    else:
+    if df.empty:
         return render(request, 'crudromero/no_data.html')
+    else:
+        import json
+        involuntario, voluntario, no = get_all_internaciones(df)
+        context = {'total': voluntario + involuntario + no}
+        if involuntario + voluntario > 0:
+            context['torta_internados'] = json.dumps(torta_internados(
+                involuntario, voluntario))
+        else:
+            context['torta_internados'] = None
+        context['torta_pacientes_total_internados'] = json.dumps(torta_pacientes_total_internados(
+            context['total'], involuntario + voluntario))
+        context['torta_pacientes_por_derivacion'] = json.dumps(get_data_torta(
+            df, 'derivacion'))
+        context['torta_por_region_sanitaria'] = json.dumps(get_data_torta(
+            df, 'region_sanitaria'))
+        context['torta_por_barrio'] = json.dumps(get_data_torta(df, 'barrio'))
+        context['get_days_data'] = json.dumps(get_days_data(df, df_visitas))
+
+        return render(request, 'crudromero/estadisticas.html', context)
 
 
 def nueva_visita(request, id):
